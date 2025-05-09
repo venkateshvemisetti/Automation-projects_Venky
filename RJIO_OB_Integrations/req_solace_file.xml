@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<instantNotification>
+	<APIKey>APP10088</APIKey>
+	<secretKey>123456</secretKey>
+	<applicationId>10088</applicationId>
+	<transactionId>TY677</transactionId>
+	 <sourceSystem>Intense</sourceSystem>
+	<useNETemplate>true</useNETemplate>
+	<neTemplateDetails>
+	<context>1993JU</context>
+	</neTemplateDetails>
+	<subject>Sample Notification from RJIO</subject>
+	<senderId></senderId>
+	<message>Test Message</message>
+<numRecipients>1</numRecipients>
+<recipientDetailsArray>
+	<item>
+		<firstName>?</firstName>
+		<lastName>?</lastName>
+		<mobileNumber>919515638763</mobileNumber>
+		<emailId>venkatesh.v@intense.in</emailId>
+		<BCC>?</BCC>
+		<CC>?</CC>
+		<JIOSCL>?</JIOSCL>
+		<RTSSCUSTID>?</RTSSCUSTID>                             
+		<jioSettings>
+		<jioUserIds>?</jioUserIds>
+		<msgType>?</msgType>
+		<senderSystemId>?</senderSystemId>
+		<text>?</text>
+		<thumbnailImageUrl>?</thumbnailImageUrl>
+		<title>?</title>
+		<url>?</url>
+		<uri>
+		<androidAppUri>?</androidAppUri>
+		<iosAppUri>?</iosAppUri>
+		</uri>
+		<expImageUrl>?</expImageUrl>
+		</jioSettings>
+	</item>				
+</recipientDetailsArray>
+<numnameValuePairs>4</numnameValuePairs>
+<nameValuePairArray>
+<item>
+               <name>BRANCH</name>
+               <value>MSMC</value>
+            </item>
+            <item>
+               <name>AMOUNT</name>
+               <value>78788</value>
+            </item>
+            <item>
+               <name>ATM</name>
+               <value>78788</value>
+            </item>
+            <item>
+               <name>reason</name>
+               <value>Deposited RS</value>
+            </item>
+
+</nameValuePairArray>
+</instantNotification>

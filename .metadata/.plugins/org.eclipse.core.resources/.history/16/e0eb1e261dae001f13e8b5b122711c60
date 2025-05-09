@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Suite">
+	<test name="Test">
+		<parameter name="accountTypeJMS" value="Jms" />
+		<parameter name="ZIPRequired" value="false" />
+		<classes>
+			<class name="com.rjio.testcases.OpenBrowserTestcase" />
+			<class name="com.rjio.testcases.LoginTestcase" />
+			<class name="com.rjio.testcases.RJIONElinkTestcase" />
+			<class name="com.rjio.testcases.AlertsAccountsTestcase">
+				<methods>
+					<!--<exclude name="createJMSAccount"></exclude>
+					<include name="editJMSAccount"></include>
+					<include name="stopJMSAccount"></include>
+					<include name="startJMSAccount"></include>-->
+					<include name="deleteJMSAccount"></include>
+				</methods>
+			</class>
+			<class name="com.rjio.testcases.LogoutTestcase">
+				<methods>
+					<include name="logoutApplication"></include>
+			</methods>
+			</class>
+		</classes>
+	</test>
+</suite> 
+

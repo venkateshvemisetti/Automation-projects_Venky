@@ -1,0 +1,13 @@
+content_assist_favorite_static_members=org.testng.Assert.*
+content_assist_lru_history=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><history maxLHS\="100" maxRHS\="10"><lhs name\="com.rjio.accelator.ReadProperties"><rhs name\="com.rjio.accelator.ReadProperties"/></lhs><lhs name\="java.util.Collection"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.lang.Iterable"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.util.List"><rhs name\="java.util.ArrayList"/></lhs><lhs name\="java.nio.file.CopyOption"><rhs name\="java.nio.file.StandardCopyOption"/></lhs><lhs name\="com.geidea.accelator.ActionWrappers"><rhs name\="com.geidea.pages.SalesRegistrationPage"/><rhs name\="com.geidea.pages.ApplicationProcessingPage"/><rhs name\="com.geidea.pages.AdminPage"/></lhs><lhs name\="com.geidea.pages.SalesRegistrationPage"><rhs name\="com.geidea.pages.SalesRegistrationPage"/></lhs><lhs name\="com.geidea.pages.ApplicationProcessingPage"><rhs name\="com.geidea.pages.ApplicationProcessingPage"/></lhs><lhs name\="java.awt.Robot"><rhs name\="java.awt.Robot"/></lhs><lhs name\="com.geidea.pages.AdminPage"><rhs name\="com.geidea.pages.AdminPage"/></lhs><lhs name\="org.openqa.selenium.SearchContext"><rhs name\="org.openqa.selenium.chrome.ChromeDriver"/></lhs><lhs name\="org.openqa.selenium.WebDriver"><rhs name\="org.openqa.selenium.chrome.ChromeDriver"/></lhs><lhs name\="java.awt.datatransfer.Transferable"><rhs name\="java.awt.datatransfer.StringSelection"/></lhs><lhs name\="java.awt.datatransfer.ClipboardOwner"><rhs name\="java.awt.datatransfer.StringSelection"/></lhs><lhs name\="java.awt.datatransfer.StringSelection"><rhs name\="java.awt.datatransfer.StringSelection"/></lhs><lhs name\="java.lang.Enum"><rhs name\="com.aventstack.extentreports.Status"/></lhs><lhs name\="java.lang.constant.Constable"><rhs name\="com.aventstack.extentreports.Status"/></lhs></history>
+content_assist_number_of_computers=12
+content_assist_proposals_background=255,255,255
+content_assist_proposals_foreground=0,0,0
+eclipse.preferences.version=1
+org.eclipse.jdt.internal.ui.navigator.layout=2
+org.eclipse.jdt.internal.ui.navigator.librariesnode=true
+org.eclipse.jdt.ui.formatterprofiles.version=23
+spelling_locale_initialized=true
+typefilter_migrated_2=true
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

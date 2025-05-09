@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite">
+	<test name="Test">
+		<!--<parameter name="accountTypeSms" value="Sms" />-->
+		<parameter name="ZIPRequired" value="false" />
+		<classes>
+			<class name="com.geidea.testcases.OpenBrowserTestcase" />
+			<class name="com.geidea.testcases.LoginTestcase" />
+			<class name="com.geidea.testcases.AdminTestcase"/>
+			<class name="com.geidea.testcases.ApplicationProcessingTestcase">
+			<methods>
+					<include name="searchApplication"></include>
+					<include name="editApplication"></include>
+					<include name="addBusinessDeatils"></include>
+			</methods>
+			</class>
+		</classes>
+	</test>
+</suite> 
+

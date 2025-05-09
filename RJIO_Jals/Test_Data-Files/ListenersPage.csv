@@ -1,0 +1,11 @@
+name|description|folderPath|Save
+Test_File|created by intense tech intense|/home/intense/|yes
+
+name|description|folderPath|Edit
+Test_File|created by intense|/home/intense/folder|yes
+
+name|description|AMQPVendor|HostName|Port|VirtualHost|UserName|Password|RequestQueue|Save
+Test_AMQP|created by intense||10.255.0.51|5672|/|intense|intense|RJIO_SV|yes
+
+name|description|AMQPVendor|HostName|Port|VirtualHost|UserName|Password|RequestQueue|Edit
+Test_AMQP|created by venky||10.255.0.51|5672|/|intense|intense|RJIO_S|yes

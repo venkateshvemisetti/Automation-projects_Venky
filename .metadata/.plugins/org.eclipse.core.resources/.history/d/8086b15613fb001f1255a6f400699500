@@ -1,0 +1,71 @@
+package com.intense.services;
+
+import java.io.File;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+public class PushReqXML {
+
+	public static void main(String[] args) {
+		
+		PushReqXML p=new PushReqXML();
+		p.writeReqXML();
+
+	}
+	public void writeReqXML() {
+		try {
+			File fis = new File("SKYC_MH.xml");
+			DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dbuilder = null;
+			dbuilder = dbfactory.newDocumentBuilder();
+			Document doc = null;
+			doc = dbuilder.parse(fis);
+			NodeList nodes;
+			Element element;
+			nodes = doc.getElementsByTagName("orderRefNumber");
+			element = (Element) nodes.item(0);
+			element.setTextContent("ORN123");
+
+			nodes=doc.getElementsByTagName("CustomerAcquisitionAgreement");
+			element = (Element) nodes.item(0);
+			element.getElementsByTagName("number").item(0).setTextContent("CAF1234");
+			
+			nodes=doc.getElementsByTagName("customer");
+			element = (Element) nodes.item(0);
+			element.getElementsByTagName("partyId").item(0).setTextContent("567566");
+			
+			
+			nodes=doc.getElementsByTagName("ResourceCharacteristic");
+			element = (Element) nodes.item(0).setTextContent("EID");
+			element.getElementsByTagName("number").item(0).setTextContent("CAF1234");
+			
+			
+			
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(fis);
+			transformer.transform(source, result);
+
+			/*--------------------------To print on console----------*/
+			// StreamResult consoleResult = new StreamResult(System.out);
+			// transformer.transform(source, consoleResult);
+
+			System.out.println("XML file updated successfully.");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+}

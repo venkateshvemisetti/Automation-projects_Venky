@@ -1,0 +1,281 @@
+package com.rjio.accelator;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+import org.apache.commons.io.FileUtils;
+import org.testng.annotations.Test;
+
+
+public class CreateExtentReportsZIP {
+
+	@Test
+	public static void createExtentReportZip() {
+		ReadProperties rp = new ReadProperties();
+		String reportpath = rp.readPro("ReportsPath");
+		String destinationZIPfolder = rp.readPro("DestinationZIPfolder");
+		Date date = new Date();
+
+		String sourceFolder = reportpath + date.getDate();
+
+		String destinationFolder = destinationZIPfolder + "\\" + date.getDate() + "\\Screenshots";
+
+		// extractScrenShotFromReport(sourceFolder +
+		// "\\Jals_-1140539969.html",destinationFolder);
+
+		copyScreenshots(sourceFolder, destinationFolder);
+
+		List<String> screenshotPaths = getScreenshotPaths(destinationFolder);
+
+		if (screenshotPaths != null) {
+
+			for (String path : screenshotPaths) {
+
+				System.out.println("Screenshot Path: " + path);
+
+			}
+
+		}
+
+		int ranNum = ThreadLocalRandom.current().nextInt();
+		String outputZipFile = destinationZIPfolder + "\\" + date.getDate() + "\\NE\\ReportForNE.zip";
+
+		String destFolder = destinationZIPfolder;
+
+		String outputZipDir = destinationZIPfolder + "\\" + date.getDate() + "\\NE";
+
+		String desiredExtension = ".html";
+
+		String reportFileName = "";
+
+		File directory = new File(destinationFolder);
+
+		if (directory.exists() && directory.isDirectory()) {
+
+			File[] files = directory.listFiles();
+
+			for (File file : files) {
+
+				if (file.isFile() && file.getName().endsWith(desiredExtension)) {
+
+					reportFileName = file.getName();
+
+					System.out.println("Found file: " + file.getName());
+
+					break;
+
+				}
+
+			}
+
+		} else {
+
+			System.out.println("Directory does not exist or is not a directory.");
+
+		}
+
+		File destDir = new File(outputZipDir);
+
+		if (!destDir.exists()) {
+
+			destDir.mkdirs();
+
+		}
+
+		// Create a list of files to include in the zip archive (Extent Report file and
+		// screenshots)
+
+		List<String> filesToZip = new ArrayList();
+
+		File report = new File(destinationFolder + "\\" + reportFileName);
+
+		try {
+
+			String reportAsString = FileUtils.readFileToString(report);
+
+			reportAsString = reportAsString
+
+					.replaceAll(sourceFolder,
+
+							date.getDate()+"//screenshots");
+
+			FileUtils.writeStringToFile(report, reportAsString);
+
+		} catch (Exception e1) {
+
+			e1.printStackTrace();
+
+		}
+
+		Path sourceFilePath = Paths.get(destinationFolder, reportFileName);
+
+		Path destinationFilePath = Paths.get(destFolder, reportFileName);
+
+		try {
+
+			// Copy the file from the source folder to the destination folder
+
+			Files.copy(sourceFilePath, destinationFilePath, StandardCopyOption.REPLACE_EXISTING);
+
+			System.out.println("File copied successfully.");
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			System.err.println("Error copying file: " + e.getMessage());
+
+		}
+
+		try {
+
+			FileOutputStream fos = new FileOutputStream(outputZipFile);
+
+			ZipOutputStream zipOut = new ZipOutputStream(fos);
+
+			File sourceDir = new File(destFolder);
+
+			// Call a recursive function to add all files and folders inside the source
+			// folder to the zip
+
+			zipDirectory(sourceDir, sourceDir.getName(), zipOut);
+
+			zipOut.close();
+
+			fos.close();
+
+			System.out.println("Zip archived created successfully.");
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			System.err.println("Error creating the zip archive: " + e.getMessage());
+
+		}
+
+	}
+
+	public static void zipDirectory(File folder, String parentFolder, ZipOutputStream zipOut) throws Exception {
+
+		byte[] buffer = new byte[1024];
+
+		File[] files = folder.listFiles();
+
+		if (files != null) {
+
+			for (File file : files) {
+
+				if (file.isDirectory()) {
+
+					String subFolder = parentFolder + "/" + file.getName();
+
+					zipDirectory(file, subFolder, zipOut);
+
+				} else {
+
+					FileInputStream fis = new FileInputStream(file);
+
+					ZipEntry zipEntry = new ZipEntry(parentFolder + "/" + file.getName());
+
+					zipOut.putNextEntry(zipEntry);
+
+					int length;
+
+					while ((length = fis.read(buffer)) > 0) {
+
+						zipOut.write(buffer, 0, length);
+
+					}
+
+					fis.close();
+
+				}
+
+			}
+
+		}
+
+	}
+
+	private static void copyScreenshots(String sourceFolder, String destinationFolder) {
+
+		File destDir = new File(destinationFolder);
+
+		if (!destDir.exists()) {
+
+			destDir.mkdirs();
+
+		}
+
+		File[] sourceFiles = new File(sourceFolder).listFiles();
+
+		if (sourceFiles != null) {
+
+			for (File sourceFile : sourceFiles) {
+
+				if (sourceFile.isFile()) {
+
+					try {
+
+						String destFilePath = destinationFolder + File.separator + sourceFile.getName();
+
+						Files.copy(sourceFile.toPath(), new File(destFilePath).toPath(),
+								StandardCopyOption.REPLACE_EXISTING);
+
+						System.out.println("Copied: " + sourceFile.getName() + " to " + destFilePath);
+
+					} catch (Exception e) {
+
+						e.printStackTrace();
+
+						System.err.println("Error copying file: " + e.getMessage());
+
+					}
+
+				}
+
+			}
+
+		} else {
+
+			System.err.println("Source folder is empty or does not exist.");
+
+		}
+
+	}
+
+	private static List<String> getScreenshotPaths(String folderPath) {
+
+		List<String> screenshotPaths = new ArrayList<>();
+
+		File folder = new File(folderPath);
+
+		File[] files = folder.listFiles((dir, name) -> name.endsWith(".png"));
+
+		if (files != null) {
+
+			for (File file : files) {
+
+				screenshotPaths.add(file.getAbsolutePath());
+
+			}
+
+		}
+
+		return screenshotPaths;
+
+	}
+
+}

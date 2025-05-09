@@ -1,0 +1,5 @@
+package com.intese.wrappers;
+
+public class ReadFileData {
+
+}

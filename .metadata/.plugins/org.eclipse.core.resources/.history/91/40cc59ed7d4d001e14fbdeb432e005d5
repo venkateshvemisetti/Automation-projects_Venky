@@ -1,0 +1,527 @@
+package com.rjio.pages;
+
+import java.util.List;
+
+import org.checkerframework.checker.units.qual.Acceleration;
+import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.support.ui.Select;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.rjio.accelator.ActionWrappers;
+import com.rjio.objects.AlertsActionsObject;
+
+public class AlertsActionsPage extends ActionWrappers {
+
+	public void alertActionLink() {
+		try {
+			sleep(1000);
+			if (findElementts(AlertsActionsObject.alertActionLink).size() > 0) {
+				if (findElementt(AlertsActionsObject.alertActionLink).isDisplayed()) {
+					click(AlertsActionsObject.alertActionLink, "alertActionLink");
+				} else {
+					System.err.println("alertActionLink is not displayed");
+				}
+			} else {
+				System.err.println("alertActionLink size is not matched");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void createSMSAction(JsonNode node) {
+		try {
+			sleep(2000);
+			driver.switchTo().frame("bodyframe");
+			Select actions = new Select(findElementt(AlertsActionsObject.addActionDD));
+			actions.selectByVisibleText("Sms");
+			sleep(1500);
+			sendKeys(AlertsActionsObject.name, "name", node.get("name").asText());
+
+			sendKeys(AlertsActionsObject.description, "description", node.get("description").asText());
+			sendKeys(AlertsActionsObject.source, "source", "2000EN");
+			sleep(1500);
+			click(AlertsActionsObject.account, "account");
+			sleep(1000);
+			click(AlertsActionsObject.accountList, "accountList");
+			sleep(1000);
+			click(AlertsActionsObject.flashMessage, "flashMessage");
+			sleep(1000);
+			click(AlertsActionsObject.flashMessageList, "flashMessageList");
+			sendKeys(AlertsActionsObject.to, "to", "@{source.mobile}");
+			sendKeys(AlertsActionsObject.message, "message", "767767767message6");
+			sleep(2000);
+			extentTest.info("The AlertAction data is ",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			click(AlertsActionsObject.saveBTN, "saveBTN");
+			sleep(2000);
+			extentTest.info("The AlertAction is saved",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			click(AlertsActionsObject.alerActiontOK, "alerActiontOK");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void createAction(String actionTypeName, JsonNode node) {
+		try {
+			sleep(2000);
+			moveFrame("bodyframe");
+			Select actions = new Select(findElementt(AlertsActionsObject.addActionDD));
+			actions.selectByVisibleText(actionTypeName);
+			sleep(1500);
+			String name_csv = node.get("name").asText();
+			extentTest.info("Name of "+actionTypeName.toUpperCase()+" action is : "+name_csv);
+			sendKeys(AlertsActionsObject.name, "name", name_csv);
+			String description_csv = node.get("description").asText();
+			sendKeys(AlertsActionsObject.description, "description", description_csv);
+			sendKeys(AlertsActionsObject.source, "source", node.get("source").asText());
+			sleep(1500);
+			click(AlertsActionsObject.account, "account");
+			sleep(1000);
+			List<WebElement> accountNames = findElementts(AlertsActionsObject.accountList);
+			int accountnamei = 0;
+			for (WebElement accountName : accountNames) {
+				sleep(500);
+				System.out.println("name are " + accountName.getText());
+				if (accountName.getText().equalsIgnoreCase(node.get("account").asText())) {
+					accountNames.get(accountnamei).click();
+					break;
+				} else {
+					System.err.println("checking for account names :: comparison");
+				}
+				accountnamei++;
+			}
+			sleep(1000);
+			// sendKeys(AlertsActionsObject.rule,"rule",node.get("rule").asText());
+			if (actionTypeName.equalsIgnoreCase("sms")) {
+				// sendKeys(AlertsActionsObject.priority, "priority",
+				// node.get("priority").asText());
+				click(AlertsActionsObject.unicode, "unicode");
+				sleep(1000);
+				List<WebElement> unicodes = findElementts(AlertsActionsObject.unicodeList);
+				System.err.println("unicodes size " + unicodes.size());
+				if (unicodes.size() > 0) {
+					int unicodei = 0;
+					for (WebElement unicode : unicodes) {
+						System.out.println("unicodes are " + unicode.getText());
+						if (unicodes.get(unicodei).getText().equalsIgnoreCase(node.get("unicode").asText())) {
+							unicodes.get(unicodei).click();
+							break;
+						} else {
+							System.err.println("checking for unicodes :: comparison");
+						}
+					}
+				} else {
+					System.err.println("unicodeList size not macthed");
+				}
+				sleep(1000);
+				click(AlertsActionsObject.flashMessage, "flashMessage");
+				sleep(1000);
+				List<WebElement> flashMessages = findElementts(AlertsActionsObject.flashMessageList);
+				int flashMessagei = 0;
+				for (WebElement flashMessage : flashMessages) {
+					System.out.println("flashMessage are " + flashMessages.get(flashMessagei).getText());
+					sleep(300);
+					System.out.println("flashMessage are " + flashMessage.getText());
+					if (flashMessage.getText().equalsIgnoreCase(node.get("flashMessage").asText())) {
+						flashMessages.get(flashMessagei).click();
+						break;
+					} else {
+						System.err.println("checking for flashMessage names :: comparison");
+					}
+					flashMessagei++;
+				}
+
+			} else {
+				System.err.println("priority : unicode : flashMessage :: skipped");
+			}
+			sendKeys(AlertsActionsObject.senderID, "senderID", node.get("senderID").asText());
+			sendKeys(AlertsActionsObject.to, "to", node.get("to").asText());
+
+			if (actionTypeName.equalsIgnoreCase("email")) {
+				/*
+				 * sendKeys(AlertsActionsObject.cc, "cc", node.get("cc").asText());
+				 * sendKeys(AlertsActionsObject.bcc, "bcc", node.get("bcc").asText());
+				 */
+				sendKeys(AlertsActionsObject.subject, "subject", node.get("subject").asText());
+				/*
+				 * sendKeys(AlertsActionsObject.attachementFilePath,"attachementFilePath",node.
+				 * get("attachementFilePath").asText());
+				 */
+				click(AlertsActionsObject.contentType, "contentType");
+				List<WebElement> contentTypes = findElementts(AlertsActionsObject.contentTypeList);
+				int contentTypei = 0;
+				for (WebElement contentType : contentTypes) {
+					if (contentType.getText().equalsIgnoreCase(node.get("contentType").asText())) {
+						contentTypes.get(contentTypei).click();
+						break;
+					} else {
+						System.err.println("checking for contentType :: comparison");
+					}
+					contentTypei++;
+				}
+				if (node.get("deleteAttachmentafteremailsent").asText().equalsIgnoreCase("yes")) {
+					if (findElementts(AlertsActionsObject.deleteAttachmentafteremailsent).size() > 0) {
+						if (!findElementt(AlertsActionsObject.deleteAttachmentafteremailsent).isSelected()) {
+							click(AlertsActionsObject.deleteAttachmentafteremailsent, "deleteAttachmentafteremailsent");
+						} else {
+							System.err.println("deleteAttachmentafteremailsent already selected");
+						}
+					} else {
+						System.err.println("deleteAttachmentafteremailsent size is not macthed");
+					}
+				} else {
+					System.err.println("deleteAttachmentafteremailsent option is NO by user input file");
+				}
+			} else {
+				System.err.println(
+						"cc : bcc: subject : contenttype : attachementFilePath : deleteAttachmentafteremailsent :: skipped");
+			}
+			extentTest.info("The action " + actionTypeName.toUpperCase() + " data is ",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			if (actionTypeName.equalsIgnoreCase("sms")) {
+				sendKeys(AlertsActionsObject.message, "message", node.get("message").asText());
+			} else if (actionTypeName.equalsIgnoreCase("email")) {
+				click(AlertsActionsObject.openEditor, "openEditor");
+				sleep(1000);
+				moveFrame("mailbody-iframeEl");
+				sendKeys(AlertsActionsObject.messageEmail, "messageEmail", node.get("message").asText());
+				extentTest.info("The Email body message is",
+						MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				backToFrame();
+				moveFrame("bodyframe");
+				click(AlertsActionsObject.saveEmailMessage, "saveEmailMessage");
+
+			}
+			{
+				System.err.println("message :: not macthed ;;;00");
+			}
+
+			sleep(2000);
+			if (node.get("Save").asText().equalsIgnoreCase("yes")) {
+				click(AlertsActionsObject.saveBTN, "saveBTN");
+				sleep(2000);
+				extentTest.pass("The action is saved sucessfully : "+name_csv,
+						MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				click(AlertsActionsObject.alerActiontOK, "alerActiontOK");
+			} else {
+				click(AlertsActionsObject.cancelBTN, "cancelBTN");
+				System.out.println("clicked on cancal btn for action creation");
+			} 
+			sleep(2000);
+			searchAction(name_csv);
+			sleep(3000);
+			extentTest.info("The created action : "+name_csv,
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			sleep(1000);
+			clear(AlertsActionsObject.searchfiled, "searchfiled");
+			backToFrame();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void editAction(String actionTypeName, JsonNode node) {
+		try {
+			sleep(2000);
+			moveFrame("bodyframe");
+			Select actions = new Select(findElementt(AlertsActionsObject.addActionDD));
+			actions.selectByVisibleText(actionTypeName);
+			sleep(1500);
+			String name_csv = node.get("name").asText();
+			sendKeys(AlertsActionsObject.name, "name", name_csv);
+			String description_csv = node.get("description").asText();
+			sendKeys(AlertsActionsObject.description, "description", description_csv);
+			sendKeys(AlertsActionsObject.source, "source", node.get("source").asText());
+			sleep(1500);
+			click(AlertsActionsObject.account, "account");
+			sleep(1000);
+			List<WebElement> accountNames = findElementts(AlertsActionsObject.accountList);
+			int accountnamei = 0;
+			for (WebElement accountName : accountNames) {
+				sleep(500);
+				System.out.println("name are " + accountName.getText());
+				if (accountName.getText().equalsIgnoreCase(node.get("account").asText())) {
+					accountNames.get(accountnamei).click();
+					break;
+				} else {
+					System.err.println("checking for account names :: comparison");
+				}
+				accountnamei++;
+			}
+			sleep(1000);
+			// sendKeys(AlertsActionsObject.rule,"rule",node.get("rule").asText());
+			if (actionTypeName.equalsIgnoreCase("sms")) {
+				// sendKeys(AlertsActionsObject.priority, "priority",
+				// node.get("priority").asText());
+				click(AlertsActionsObject.unicode, "unicode");
+				sleep(1000);
+				List<WebElement> unicodes = findElementts(AlertsActionsObject.unicodeList);
+				System.err.println("unicodes size " + unicodes.size());
+				if (unicodes.size() > 0) {
+					int unicodei = 0;
+					for (WebElement unicode : unicodes) {
+						System.out.println("unicodes are " + unicode.getText());
+						if (unicodes.get(unicodei).getText().equalsIgnoreCase(node.get("unicode").asText())) {
+							unicodes.get(unicodei).click();
+							break;
+						} else {
+							System.err.println("checking for unicodes :: comparison");
+						}
+					}
+				} else {
+					System.err.println("unicodeList size not macthed");
+				}
+				sleep(1000);
+				click(AlertsActionsObject.flashMessage, "flashMessage");
+				sleep(1000);
+				List<WebElement> flashMessages = findElementts(AlertsActionsObject.flashMessageList);
+				int flashMessagei = 0;
+				for (WebElement flashMessage : flashMessages) {
+					System.out.println("flashMessage are " + flashMessages.get(flashMessagei).getText());
+					sleep(300);
+					System.out.println("flashMessage are " + flashMessage.getText());
+					if (flashMessage.getText().equalsIgnoreCase(node.get("flashMessage").asText())) {
+						flashMessages.get(flashMessagei).click();
+						break;
+					} else {
+						System.err.println("checking for flashMessage names :: comparison");
+					}
+					flashMessagei++;
+				}
+
+			} else {
+				System.err.println("priority : unicode : flashMessage :: skipped");
+			}
+			sendKeys(AlertsActionsObject.senderID, "senderID", node.get("senderID").asText());
+			sendKeys(AlertsActionsObject.to, "to", node.get("to").asText());
+
+			if (actionTypeName.equalsIgnoreCase("email")) {
+				/*
+				 * sendKeys(AlertsActionsObject.cc, "cc", node.get("cc").asText());
+				 * sendKeys(AlertsActionsObject.bcc, "bcc", node.get("bcc").asText());
+				 */
+				sendKeys(AlertsActionsObject.subject, "subject", node.get("subject").asText());
+				/*
+				 * sendKeys(AlertsActionsObject.attachementFilePath,"attachementFilePath",node.
+				 * get("attachementFilePath").asText());
+				 */
+				click(AlertsActionsObject.contentType, "contentType");
+				List<WebElement> contentTypes = findElementts(AlertsActionsObject.contentTypeList);
+				int contentTypei = 0;
+				for (WebElement contentType : contentTypes) {
+					if (contentType.getText().equalsIgnoreCase(node.get("contentType").asText())) {
+						contentTypes.get(contentTypei).click();
+						break;
+					} else {
+						System.err.println("checking for contentType :: comparison");
+					}
+					contentTypei++;
+				}
+				if (node.get("deleteAttachmentafteremailsent").asText().equalsIgnoreCase("yes")) {
+					if (findElementts(AlertsActionsObject.deleteAttachmentafteremailsent).size() > 0) {
+						if (!findElementt(AlertsActionsObject.deleteAttachmentafteremailsent).isSelected()) {
+							click(AlertsActionsObject.deleteAttachmentafteremailsent, "deleteAttachmentafteremailsent");
+						} else {
+							System.err.println("deleteAttachmentafteremailsent already selected");
+						}
+					} else {
+						System.err.println("deleteAttachmentafteremailsent size is not macthed");
+					}
+				} else {
+					System.err.println("deleteAttachmentafteremailsent option is NO by user input file");
+				}
+			} else {
+				System.err.println(
+						"cc : bcc: subject : contenttype : attachementFilePath : deleteAttachmentafteremailsent :: skipped");
+			}
+			extentTest.info("The AlertAction " + actionTypeName.toUpperCase() + " data is ",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			if (actionTypeName.equalsIgnoreCase("sms")) {
+				sendKeys(AlertsActionsObject.message, "message", node.get("message").asText());
+			} else if (actionTypeName.equalsIgnoreCase("email")) {
+				click(AlertsActionsObject.openEditor, "openEditor");
+				sleep(1000);
+				moveFrame("mailbody-iframeEl");
+				sendKeys(AlertsActionsObject.messageEmail, "messageEmail", node.get("message").asText());
+				extentTest.info("The Email body message is",
+						MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				backToFrame();
+				moveFrame("bodyframe");
+				click(AlertsActionsObject.saveEmailMessage, "saveEmailMessage");
+
+			}
+			{
+				System.err.println("message :: not macthed ;;;00");
+			}
+
+			sleep(2000);
+			if (node.get("Save").asText().equalsIgnoreCase("yes")
+					&& node.get("Cancel").asText().equalsIgnoreCase("no")) {
+				click(AlertsActionsObject.saveBTN, "saveBTN");
+				sleep(2000);
+				extentTest.info("The AlertAction is saved sucessfully",
+						MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				click(AlertsActionsObject.alerActiontOK, "alerActiontOK");
+			} else if (node.get("Save").asText().equalsIgnoreCase("no")
+					&& node.get("Cancel").asText().equalsIgnoreCase("yes")) {
+				click(AlertsActionsObject.cancelBTN, "cancelBTN");
+				System.out.println("clicked on cancal btn for action creation");
+			} else {
+				System.err.println("alertaction save and cancel options is not matched");
+			}
+			backToFrame();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public void searchAction(String name) {
+		try {
+			sendKeys(AlertsActionsObject.searchfiled, "searchfiled", name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void enableAction(JsonNode node) {
+		try {
+			sleep(4000);
+			moveFrame("bodyframe");
+			String actionName = node.get("name").asText();
+			searchAction(actionName);
+			sleep(5000);
+			System.err.println("size----" + findElementts(AlertsActionsObject.searchResult).size());
+			if (findElementts(AlertsActionsObject.searchResult).size() > 0) {
+				if (findElementts(AlertsActionsObject.enableAction).size() > 0) {
+					if (findElementt(AlertsActionsObject.enableAction).getAttribute("title").contains("Enable")) {
+						extentTest.info("Before enabling the action : "+actionName,
+								MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						click(AlertsActionsObject.enableAction, "enableAction");
+						sleep(3000);
+						extentTest.info("The confirmation for enabling the action",
+								MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						click(AlertsActionsObject.yesBTN, "yesBTN");
+						sleep(5000);
+						searchAction(actionName);
+						sleep(3000);
+						if (findElementt(AlertsActionsObject.disableAction).getAttribute("title").contains("Disable")) {
+							extentTest.pass("Post enabling action successfully : "+actionName,
+									MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						} else {
+							extentTest.fail("The post enabling action",
+									MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						}
+					} else {
+						System.err.println("Already enabled " + actionName);
+						extentTest.info("Already enabled " + actionName);
+					}
+				} else {
+					System.err.println("enable btn size not matched");
+				}
+			} else {
+				System.err.println("searchResult :: no records found");
+				extentTest.info("searchResult :: no records found " + actionName);
+
+			}
+			clear(AlertsActionsObject.searchfiled, "searchfiled");
+			backToFrame();
+		} catch (Exception e) {
+			e.printStackTrace();
+			extentTest.fail(e);
+
+		}
+	}
+
+	public void disableAction(JsonNode node) {
+		try {
+			sleep(3000);
+			moveFrame("bodyframe");
+			String actionName = node.get("name").asText();
+			searchAction(actionName);
+			sleep(5000);
+			if (findElementts(AlertsActionsObject.searchResult).size() > 0) {
+				if (findElementts(AlertsActionsObject.disableAction).size() > 0) {
+					if (findElementt(AlertsActionsObject.disableAction).getAttribute("title").contains("Disable")) {
+						extentTest.info("Before disabling the action : "+actionName,
+								MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						click(AlertsActionsObject.disableAction, "disableAction");
+						sleep(3000);
+						extentTest.info("The confirmation for disabling the action",
+								MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						click(AlertsActionsObject.yesBTN, "yesBTN");
+						sleep(5000);
+						searchAction(actionName);
+						sleep(3000);
+						if (findElementt(AlertsActionsObject.enableAction).getAttribute("title").contains("Enable")) {
+							extentTest.pass("The post disabling action successfully : "+actionName,
+									MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						} else {
+							extentTest.fail("The post disabling action",
+									MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						}
+					} else {
+						System.err.println("Already enabled " + actionName);
+						extentTest.info("Already enabled " + actionName);
+					}
+
+				} else {
+					System.err.println("disable btn size not matched");
+				}
+			} else {
+				System.err.println("searchResult :: no records found " + actionName);
+				extentTest.info("searchResult :: no records found " + actionName);
+
+			}
+			clear(AlertsActionsObject.searchfiled, "searchfiled");
+			backToFrame();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			extentTest.fail(e);
+		}
+	}
+
+	public void deleteAction(JsonNode node) {
+		try {
+			sleep(3000);
+			moveFrame("bodyframe");
+			String actionName = node.get("name").asText();
+			searchAction(actionName);
+			sleep(3000);
+			if (findElementts(AlertsActionsObject.searchResult).size() > 0) {
+				if (findElementts(AlertsActionsObject.deleteAction).size() > 0) {
+					extentTest.info("Before deleting : "+actionName,
+							MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+					click(AlertsActionsObject.deleteAction, "deleteAction");
+					sleep(3000);
+					click(AlertsActionsObject.yesBTN, "yesBTN");
+					sleep(5000);
+					searchAction(actionName);
+					sleep(3000);
+					extentTest.pass("Post deleting the action successfully : "+actionName,
+							MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				} else {
+					System.err.println("delete btn size not matched");
+				}
+			}
+
+			else {
+				System.err.println("searchResult :: no records found " + actionName);
+				extentTest.info("searchResult :: no records found " + actionName);
+			}
+
+			clear(AlertsActionsObject.searchfiled, "searchfiled");
+			backToFrame();
+		} catch (Exception e) {
+			e.printStackTrace();
+			extentTest.fail(e);
+		}
+	}
+}

@@ -1,0 +1,53 @@
+package com.rjio.objects;
+
+import org.openqa.selenium.By;
+
+public class AlertsActionsObject {
+	public static By alertActionLink=By.xpath("//td[contains(text(),'Alerts Actions')]");
+	public static By addActionDD = By.xpath("//select[@class='content_bold']");
+	public static By name=By.xpath("//input[@name='name']");
+	public static By description=By.xpath("//textarea[@name='description']");
+	public static By source=By.xpath("//div[@id='srcID-bodyEl']/input");
+	public static By account=By.xpath("//div[@id='accID-bodyEl']//input[@id='ext-gen1044']");
+	public static By accountList=By.xpath("//div[@class='list-ct x-body-masked']/ul/li");
+	public static By rule=By.xpath("//textarea[@name='rule']");
+	public static By priority=By.xpath("//input[@name='priority']");
+	public static By unicode=By.xpath("//div[@id='unicode-bodyEl']");
+	public static By unicodeList=By.xpath("//div[contains(@class,'x-boundlist-floating') and not(contains(@style,'display: none;'))]//div[@class='list-ct x-body-masked']/ul/li");
+	public static By flashMessage=By.xpath("//div[@id='flashMessage-bodyEl']/input");
+	public static By flashMessageList=By.xpath("//div[contains(@class,'x-boundlist-floating') and not(contains(@style,'display: none;'))]//div[@class='list-ct']/ul/li");
+	public static By senderID=By.xpath("//input[@name='sender']");
+	public static By to=By.xpath("//input[@name='to']");
+	public static By cc=By.xpath("//input[@name='cc']");
+	public static By bcc=By.xpath("//input[@name='bcc']");
+	public static By subject=By.xpath("//input[@name='subject']");
+	public static By attachementFilePath=By.xpath("//input[@name='attachment']");
+	public static By contentType=By.xpath("//div[@id='contenttype-bodyEl']");
+	public static By contentTypeList=By.xpath("//div[contains(@class,'x-boundlist-floating') and not(contains(@style,'display: none;'))]//div[@class='list-ct x-body-masked']/ul/li");
+	public static By TLVPEID=By.xpath("//input[@name='dltPEId']");
+	public static By TLVTemplateID=By.xpath("//input[@name='dltTemplateId']");
+	public static By TLVTelemarketerID=By.xpath("//input[@name='dltTelemarketerId']");
+	public static By message=By.xpath("//textarea[@name='message']");
+	public static By messageEmail=By.xpath("//body[not(contains(@id,'ext-gen'))]");
+	public static By deleteAttachmentafteremailsent=By.xpath("//div[@id='deleteAttachID-bodyEl']/input");
+	public static By openEditor=By.xpath("//div/label[@id='msgID']/a");
+	public static By saveEmailMessage=By.xpath("//button[not(contains(@id,'saveOrUpdate'))]/span[.='Save']");
+	public static By saveBTN=By.xpath("//span[@id='saveOrUpdatebottomID-btnInnerEl']");
+	public static By updateBTN=By.xpath("//span[@id='saveOrUpdatebottomID-btnInnerEl']");
+	public static By cancelBTN=By.xpath("//div[@id='backbutton-bottom']//span[contains(text(),'Cancel')]");
+	public static By alerActiontOK=By.xpath("//button/span[contains(@id,'btnInnerEl') and contains(.,'OK')]");
+	public static By searchfiled=By.xpath("//div[@id='searchField-bodyEl']/input");
+	public static By disableAction=By.xpath("//tr/td[@title='Disable Action']");
+	public static By yesBTN=By.xpath("//button/span[contains(@id,'btnInnerEl') and contains(.,'Yes')]");
+	public static By enableAction=By.xpath("//tr/td[@title='Enable Action']");
+	public static By searchResult=By.xpath("//table[@class='x-grid-table x-grid-table-resizer']");
+	public static By deleteAction=By.xpath("//tr/td[@title='Delete Action']");
+	public static By editAction=By.xpath("//tr/td[@title='Edit Action']");
+	public static By searchActionType=By.xpath("//table[not (@*)]//tr/td[2]");
+	public static By searchActionName=By.xpath("//td[@class=' x-grid-cell x-grid-cell-name   ']");
+	
+	//tr/td[@innerhtm='ALERTS.LABEL.ACTION.INFORMATION']
+	
+	
+	
+}

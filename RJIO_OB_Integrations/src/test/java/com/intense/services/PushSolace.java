@@ -1,0 +1,90 @@
+package com.intense.services;
+
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
+import javax.jms.DeliveryMode;
+import javax.jms.Message;
+import javax.jms.MessageProducer;
+import javax.jms.Queue;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+
+import com.solacesystems.jms.SolConnectionFactory;
+import com.solacesystems.jms.SolJmsUtility;
+
+public class PushSolace {
+
+	public static void main(String[] args) {
+		String solaceHost = "tcp://10.255.0.51:55003"; // Compressed SMF port
+		String solaceVPN = "default";
+		String solaceUser = "admin";
+		String solacePassword = "admin";
+		String queueName = "RJIO_NE_Sol"; // ✅ Existing queue name
+		String filename="req_solace_file.xml";
+
+		Connection connection = null;
+		Session session = null;
+		MessageProducer messageProducer = null;
+
+		try {
+
+
+			String filePath = filename; // Path to the file you want to read (adjust the path as necessary)
+
+			// Read the file content directly
+			String messageIP = null;
+			// Read all bytes from the file and convert it to a string
+			byte[] fileBytes = null;
+			fileBytes = Files.readAllBytes(Paths.get(filePath));
+			messageIP = new String(fileBytes);
+
+
+
+
+
+			ConnectionFactory connectionFactory = SolJmsUtility.createConnectionFactory();
+			SolConnectionFactory solConnectionFactory = (SolConnectionFactory) connectionFactory;
+
+			// Set Solace connection properties
+			solConnectionFactory.setHost(solaceHost);
+			solConnectionFactory.setVPN(solaceVPN);
+			solConnectionFactory.setUsername(solaceUser);
+			solConnectionFactory.setPassword(solacePassword);
+
+			// Enable message payload compression
+			solConnectionFactory.setCompressionLevel(1); // 1 = low compression, fast
+
+			// Create and start the connection
+			connection = solConnectionFactory.createConnection();
+			connection.start();
+
+			// Create a non-transacted session with client acknowledgment
+			session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
+
+			// Reference the existing queue
+			Queue queue = session.createQueue(queueName);
+
+			// Send a persistent text message to the queue
+			messageProducer = session.createProducer(queue);
+			TextMessage message = session.createTextMessage(messageIP);
+			messageProducer.send(queue, message, DeliveryMode.PERSISTENT, Message.DEFAULT_PRIORITY, Message.DEFAULT_TIME_TO_LIVE);
+
+			System.out.println("Message sent successfully to the queue: " + queueName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			// Clean up resources
+			try {
+				if (messageProducer != null) messageProducer.close();
+				if (session != null) session.close();
+				if (connection != null) connection.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}

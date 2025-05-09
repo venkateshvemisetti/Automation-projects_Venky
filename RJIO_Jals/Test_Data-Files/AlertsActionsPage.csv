@@ -1,0 +1,14 @@
+name|description|source|account|unicode|flashMessage|senderID|to|message|Save
+Test2_AC|created by Venky|1993JU|INTENSE_SMS|no|1|abc|@{source.mobile}|Hi Team , Welcome Intense|yes
+
+name|description|source|account|unicode|flashMessage|senderID|to|message|Edit
+Test2_AC|created by Venky Intense|1993JU|fgh|yes|2|xyz|@{source.mobile}|Hi Team how are you intense|yes
+
+name|description|source|account|senderID|to|subject|contentType|deleteAttachmentafteremailsent|message|Save
+Testemail_1|created by Venky|1993JU|EM_2505_1|abc|venkatesh.v@intense.in|Sample Mail|html|no|Hi Team NE|yes
+
+name|description|source|account|senderID|to|subject|contentType|deleteAttachmentafteremailsent|message|Edit
+Testemail_1|created by Venky Intense|1993JU|EM_2505_2|xyz|venkatesh.v@intense.in|Sample NE Mail|html|no|Hello Team NE|yes
+
+
+

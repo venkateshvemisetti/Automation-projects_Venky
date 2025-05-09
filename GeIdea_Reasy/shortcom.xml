@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Suite">
+	<test name="Test">
+		<!--<parameter name="accountTypeSms" value="Sms" />-->
+		<parameter name="ZIPRequired" value="false" />
+		<classes>
+			<class name="com.geidea.testcases.OpenBrowserTestcase" />
+			<class name="com.geidea.testcases.LoginTestcase" />
+			<class name="com.geidea.testcases.AppRegistartionTestcase"/>
+			
+			<!--<class name="com.geidea.testcases.LogoutTestcase">
+				<methods>
+					<include name="logoutApplication"></include>
+			</methods>
+			</class>-->
+		</classes>
+	</test>
+</suite> 
+

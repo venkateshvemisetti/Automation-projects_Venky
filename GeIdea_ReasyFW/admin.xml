@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Suite">
+	<test name="Test">
+		<classes>
+			<class name="com.geidea.testcases.OpenBrowserTestcase" />
+			<class name="com.geidea.testcases.LoginTestcase" />
+			<class name="com.geidea.testcases.AdminTestcase"/>
+			<class name="com.geidea.testcases.ApplicationProcessingTestcase"/>
+			<!--<class name="com.geidea.testcases.LogoutTestcase">
+				<methods>
+					<include name="logoutApplication"></include>
+			</methods>
+			</class>-->
+		</classes>
+	</test>
+</suite> 
+

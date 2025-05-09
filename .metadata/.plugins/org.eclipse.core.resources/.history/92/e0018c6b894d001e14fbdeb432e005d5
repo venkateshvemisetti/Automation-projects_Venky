@@ -1,0 +1,213 @@
+package com.rjio.pages;
+
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.rjio.accelator.ActionWrappers;
+import com.rjio.objects.ProcessBucketsObject;
+
+public class ProcessBucketPage extends ActionWrappers {
+
+	public void processBucketLink() {
+		try {
+			sleep(1000);
+			if (findElementts(ProcessBucketsObject.processBucketLink).size() > 0) {
+				if (findElementt(ProcessBucketsObject.processBucketLink).isDisplayed()) {
+					click(ProcessBucketsObject.processBucketLink, "processBucketLink");
+				} else {
+					System.err.println("processBucketLink is not displayed");
+				}
+			} else {
+				System.err.println("processBucketLink size is not matched");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void createProcessBucket(JsonNode node) {
+		try {
+			sleep(2000);
+			moveFrame("bodyframe");
+			Select listeners = new Select(findElementt(ProcessBucketsObject.addBucketDD));
+			listeners.selectByVisibleText("bucket");
+			sleep(1500);
+			sendKeys(ProcessBucketsObject.bucketName, "bucketName", node.get("bucketName").asText());
+			sendKeys(ProcessBucketsObject.description, "description", node.get("description").asText());
+			sendKeys(ProcessBucketsObject.workerSize, "workerSize", node.get("workerSize").asText());
+			sendKeys(ProcessBucketsObject.priority, "priority", node.get("priority").asText());
+			sendKeys(ProcessBucketsObject.ruleDefinition, "ruleDefinition", node.get("ruleDefinition").asText());
+			click(ProcessBucketsObject.account, "account");
+			sleep(1000);
+			List<WebElement> accountNames = findElementts(ProcessBucketsObject.accountList);
+			int accountnamei = 0;
+			for (WebElement accountName : accountNames) {
+				sleep(500);
+				System.out.println("name are " + accountName.getText());
+				if (accountName.getText().equalsIgnoreCase(node.get("account").asText())) {
+					accountNames.get(accountnamei).click();
+					break;
+				} else {
+					System.err.println("checking for account names :: comparison");
+				}
+				accountnamei++;
+			}
+
+			sleep(1000);
+			if (node.get("useAccountCheck").asText().equalsIgnoreCase("yes")) {
+				if (!findElementt(ProcessBucketsObject.useAccountCheck).isSelected()) {
+					click(ProcessBucketsObject.useAccountCheck, "useAccountCheck");
+				} else {
+					System.err.println("useAccountCheck already selected");
+				}
+			} else {
+				System.err.println("useAccountCheck option is NO input file");
+			}
+
+			sleep(1500);
+
+			extentTest.info("The process bucket data is ",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			if (node.get("Save").asText().equalsIgnoreCase("yes")) {
+				click(ProcessBucketsObject.saveBTN, "saveBTN");
+				extentTest.info("The process bucket is saved",
+						MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				click(ProcessBucketsObject.alertBucketOK, "alertBucketOK");
+			} else {
+				click(ProcessBucketsObject.canceBTN, "canceBTN");
+			}
+			sleep(2000);
+			backToFrame();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void searchProcessBucket(String name) {
+		try {
+			sendKeys(ProcessBucketsObject.searchfiled, "searchfiled", name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void editProcessBucket(JsonNode node) {
+		try {
+			sleep(2000);
+			moveFrame("bodyframe");
+			String bucketName = node.get("bucketName").asText();
+			searchProcessBucket(bucketName);
+			sleep(2000);
+			extentTest.info("The ProcessBuckets is ",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			click(ProcessBucketsObject.editIcon, "editIcon");
+			sleep(1000);
+			extentTest.info("The ProcessBucket of edit is ",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+
+			sendKeys(ProcessBucketsObject.description, "description", node.get("description").asText());
+			sendKeys(ProcessBucketsObject.workerSize, "workerSize", node.get("workerSize").asText());
+			sendKeys(ProcessBucketsObject.priority, "priority", node.get("priority").asText());
+			sendKeys(ProcessBucketsObject.ruleDefinition, "ruleDefinition", node.get("ruleDefinition").asText());
+			click(ProcessBucketsObject.account, "account");
+			sleep(1000);
+			List<WebElement> accountNames = findElementts(ProcessBucketsObject.accountList);
+			int accountnamei = 0;
+			for (WebElement accountName : accountNames) {
+				sleep(500);
+				System.out.println("name are " + accountName.getText());
+				if (accountName.getText().equalsIgnoreCase(node.get("account").asText())) {
+					accountNames.get(accountnamei).click();
+					break;
+				} else {
+					System.err.println("checking for account names :: comparison");
+				}
+				accountnamei++;
+			}
+
+			sleep(1000);
+			if (node.get("useAccountCheck").asText().equalsIgnoreCase("yes")) {
+				if (!findElementt(ProcessBucketsObject.useAccountCheck).isSelected()) {
+					click(ProcessBucketsObject.useAccountCheck, "useAccountCheck");
+				} else {
+					System.err.println("useAccountCheck already selected");
+				}
+			} else {
+				System.err.println("useAccountCheck option is NO input file");
+			}
+			sleep(1000);
+			if (node.get("Edit").asText().equalsIgnoreCase("yes")) {
+				click(ProcessBucketsObject.updateBTN, "updateBTN");
+				extentTest.info("The process bucket is updated",
+						MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				click(ProcessBucketsObject.alertBucketOK, "alertBucketOK");
+			} else {
+				click(ProcessBucketsObject.canceBTN, "canceBTN");
+			}
+			sleep(1000);
+			backToFrame();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void startProcessBucket(JsonNode node) {
+		try {
+			moveFrame("bodyframe");
+			sleep(4000);
+			String bucketName = node.get("bucketName").asText();
+			searchProcessBucket(bucketName);
+			sleep(3000);
+			extentTest.info("The before processbucket enabling",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			click(ProcessBucketsObject.enableIcon, "enableIcon");
+			sleep(2000);
+			extentTest.pass("The processbucket message warn is ",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			click(ProcessBucketsObject.yesBTN, "yesBTN");
+			sleep(1500);
+			searchProcessBucket(bucketName);
+			sleep(3000);
+			extentTest.pass("The post processbucket enabling",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			clear(ProcessBucketsObject.searchfiled, "searchfiled");
+			backToFrame();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void stopProcessBucket(JsonNode node) {
+		try {
+
+			sleep(4000);
+			moveFrame("bodyframe");
+			String bucketName = node.get("bucketName").asText();
+			searchProcessBucket(bucketName);
+			sleep(3000);
+			extentTest.info("before processbucket stopping : "+bucketName,
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			click(ProcessBucketsObject.disableIcon, "disableIcon");
+			sleep(3000);
+			extentTest.pass("Bucket confirmation is : "+bucketName,
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			click(ProcessBucketsObject.yesBTN, "yesBTN");
+			sleep(1500);
+			searchProcessBucket(bucketName);
+			sleep(3000);
+			extentTest.pass("The post processbucket stopping",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			clear(ProcessBucketsObject.searchfiled, "searchfiled");
+			backToFrame();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

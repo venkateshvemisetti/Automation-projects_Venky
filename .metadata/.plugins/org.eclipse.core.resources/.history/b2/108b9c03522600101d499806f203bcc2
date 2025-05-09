@@ -1,0 +1,70 @@
+package com.intense.services;
+import com.solacesystems.jms.SolConnectionFactory;
+import com.solacesystems.jms.SupportedProperty;
+
+import oracle.jdbc.internal.JMSFactory;
+
+import com.solacesystems.jms.JMSFactoryFactory;
+
+import javax.jms.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
+import java.util.Properties;
+
+public class PushSolace {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+		
+
+		public void pushToSolaceQueue() {
+		    String queueName = "RJIO_STRT";
+		    String filePath = "";
+
+		    String messageIP = null;
+		    try {
+		        byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
+		        messageIP = new String(fileBytes);
+
+		        // Solace JMS Setup
+		        JMSFactory factoryFactory = JMSFactory.getInstance(JMSFactory.SOLACE);
+		        SolConnectionFactory connectionFactory = factoryFactory.createConnectionFactory();
+
+		        // Solace connection properties
+		        connectionFactory.setHost("tcp://<solace-host>:<port>");
+		        connectionFactory.setVPN("default"); // Replace with your Solace VPN
+		        connectionFactory.setUsername("<username>");
+		        connectionFactory.setPassword("<password>");
+
+		        // Create connection
+		        Connection connection = connectionFactory.createConnection();
+		        connection.start();
+
+		        // Create session
+		        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+		        // Lookup the queue
+		        Queue queue = session.createQueue(queueName);
+
+		        // Create producer and send message
+		        MessageProducer producer = session.createProducer(queue);
+		        TextMessage message = session.createTextMessage(messageIP);
+		        producer.send(message);
+		        System.out.println("Sent to Solace queue :: " + messageIP);
+
+		        // Cleanup
+		        producer.close();
+		        session.close();
+		        connection.close();
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		}
+
+	}
+}

@@ -1,0 +1,21 @@
+package com.rjio.testcases;
+
+import org.testng.annotations.Test;
+
+import com.rjio.accelator.ActionWrappers;
+import com.rjio.pages.RJIONElinkPage;
+
+public class RJIONElinkTestcase extends ActionWrappers {
+	RJIONElinkPage nelink=new RJIONElinkPage();
+	
+	@Test
+	public void RJIONELink() {
+		try {
+			nelink.RJIO_NELink();
+			extent.removeTest(extentTest);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

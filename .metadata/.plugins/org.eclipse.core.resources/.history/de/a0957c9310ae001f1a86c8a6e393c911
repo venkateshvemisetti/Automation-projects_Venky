@@ -1,0 +1,615 @@
+package com.rjio.pages;
+
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.rjio.accelator.ActionWrappers;
+import com.rjio.accelator.ExcelOperations;
+import com.rjio.objects.AlertsAccountsObject;
+
+public class AlertsAccountsPage extends ActionWrappers {
+
+	ExcelOperations re = new ExcelOperations();
+
+	public void alertAccountLink() {
+		try {
+			sleep(1000);
+			if (findElementts(AlertsAccountsObject.alertAccountLink).size() > 0) {
+				if (findElementt(AlertsAccountsObject.alertAccountLink).isDisplayed()) {
+					click(AlertsAccountsObject.alertAccountLink, "alertAccountLink");
+					waitUntilSpinnerDisappers();
+				} else {
+					System.err.println("alertAccountLink is not displayed");
+				}
+			} else {
+				System.err.println("alertAccountLink size is not matched");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void createAccountSMS() {
+		try {
+			waitUntilSpinnerDisappers();
+			driver.switchTo().frame("bodyframe");
+			Select accounts = new Select(findElementt(AlertsAccountsObject.addAccountDD));
+			accounts.selectByVisibleText("Sms");
+			sleep(1000);
+			sendKeys(AlertsAccountsObject.name, "name", re.readExcel("RJIO_NE", 2, 3));
+			sendKeys(AlertsAccountsObject.description, "description", re.readExcel("RJIO_NE", 3, 3));
+			sleep(500);
+			click(AlertsAccountsObject.queue, "queue");
+			sleep(500);
+			click(AlertsAccountsObject.queueList, "queueList");
+			sleep(1000);
+			sendKeys(AlertsAccountsObject.senderID, "senderID", "abc");
+			sendKeys(AlertsAccountsObject.host, "host", "172.18.91.0");
+			sendKeys(AlertsAccountsObject.port, "port", "78767");
+			sendKeys(AlertsAccountsObject.username, "username", "username");
+			sendKeys(AlertsAccountsObject.password, "password", "password");
+			sleep(500);
+			extentTest.info("The AlertAccount data is ",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			click(AlertsAccountsObject.saveBTN, "saveBTN");
+			extentTest.info("The AlertAccount is saved",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			sleep(1000);
+			click(AlertsAccountsObject.alertAccountOK, "alertAccountOK");
+			sleep(1000);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void createAccount(String accountType, JsonNode node) {
+		try {
+			waitUntilSpinnerDisappers();
+			System.out.println("account === " + accountType);
+			moveFrame("bodyframe");
+			Select accounts = new Select(findElementt(AlertsAccountsObject.addAccountDD));
+			accounts.selectByVisibleText(accountType);
+			sleep(1000);
+			String name_csv = node.get("name").asText();
+			sendKeys(AlertsAccountsObject.name, "name", name_csv);
+			sendKeys(AlertsAccountsObject.description, "description", node.get("description").asText());
+			sleep(500);
+			String Q_AMQP_name=null;
+			if (accountType.equalsIgnoreCase("email") || accountType.equalsIgnoreCase("Sms")) {
+				Q_AMQP_name="queue";
+			} else if(accountType.equalsIgnoreCase("AMQP")) {
+               Q_AMQP_name="AMQPVendor";
+			}
+			else if(accountType.equalsIgnoreCase("Jms")) {
+				Q_AMQP_name="JMSclient";
+			}
+			List<WebElement> li1=findElementts(AlertsAccountsObject.queue);
+			/*click for queue list-email,sms and also AMQP vendor 
+			list select list just DD clicking & Jms client*/
+			li1.get(0).click();
+			
+			 //click for queue list and also AMQP vendor list select list just DD clicking
+			//click(AlertsAccountsObject.queue, "queue" );
+			sleep(1000);
+			selectDDforAccounts(Q_AMQP_name, node);
+			/*List<WebElement> queueNames = findElementts(AlertsAccountsObject.queueList);
+			int queueNamei = 0;
+			for (WebElement queueName : queueNames) {
+				if (queueName.getText().equalsIgnoreCase(node.get(Q_AMQP_name).asText())) {
+					queueNames.get(queueNamei).click();
+					break;
+				} else {
+					System.err.println("checking for queue :: comparison");
+				}
+				queueNamei++;
+			}*/
+			/*----- end of click for queue list and also AMQP vendor list and select list---*/
+			if (accountType.equalsIgnoreCase("Jms")) {
+				li1.get(1).click();
+				sleep(1000);
+				Q_AMQP_name="connectiontype";
+				selectDDforAccounts(Q_AMQP_name, node);
+				sleep(1000);
+				sendKeys(AlertsAccountsObject.connectionurl,"connectionurl",node.get("connectionurl").asText());
+				sendKeys(AlertsAccountsObject.connectionfactory,"connectionfactory",node.get("connectionfactory").asText());
+			} 
+			
+			if (accountType.equalsIgnoreCase("Jms")) {
+				System.out.println("No need host and port for this account : "+accountType);
+			} else {
+				sendKeys(AlertsAccountsObject.host, "host", node.get("host").asText());
+				sendKeys(AlertsAccountsObject.port, "port", node.get("port").asText());
+			}
+			
+			
+			if (accountType.equalsIgnoreCase("email") || accountType.equalsIgnoreCase("Sms")) {
+				sendKeys(AlertsAccountsObject.senderID, "senderID", node.get("senderID").asText());
+			} else {
+                 System.out.println("No need SENDER ID for this account : "+accountType);
+			}
+			
+			if (accountType.equalsIgnoreCase("AMQP")) {
+				sendKeys(AlertsAccountsObject.virtualhost, "virtualhost", node.get("virtualhost").asText());
+			} else {
+                 System.out.println("No need virtualhost for this account : "+accountType);
+			}
+			
+			
+
+			if (accountType.equalsIgnoreCase("email")) {
+				sleep(500);
+				click(AlertsAccountsObject.authentication, "authentication");
+				List<WebElement> authenticationNames = findElementts(AlertsAccountsObject.authenticationList);
+				int authenticationNamei = 0;
+				for (WebElement authenticationName : authenticationNames) {
+					if (authenticationName.getText().equalsIgnoreCase(node.get("authentication").asText())) {
+						authenticationNames.get(authenticationNamei).click();
+						break;
+					} else {
+						System.err.println("checking for authentication :: comparison");
+					}
+					authenticationNamei++;
+				}
+				sleep(1000);
+				/*
+				 * System.err.println("auth name: 0  --- " +
+				 * findElementt(AlertsAccountsObject.authentication).getText());
+				 * System.err.println( "auth name:  1 --- " +
+				 * findElementt(AlertsAccountsObject.authentication).getAttribute("value"));
+				 * System.err.println("auth name:  2 --- " +
+				 * findElementt(AlertsAccountsObject.authentication).getAttribute("innerHTML"));
+				 * System.err.println("auth name:  3 --- " +
+				 * findElementt(AlertsAccountsObject.authentication).getAttribute("innertext"));
+				 * System.err.println("auth name:  4 --- " +
+				 * findElementt(AlertsAccountsObject.authentication).getAttribute("textcontent")
+				 * );
+				 */
+			} else {
+				System.err.println("authenication skipped");
+			}
+			if (accountType.equalsIgnoreCase("Email")) {
+				String authMode = findElementt(AlertsAccountsObject.authentication).getAttribute("value");
+				if (!authMode.equalsIgnoreCase("No Authentication")) {
+					authModefields(node);
+				}
+			} else if (accountType.equalsIgnoreCase("Sms") || accountType.equalsIgnoreCase("AMQP") ||accountType.equalsIgnoreCase("Jms")) {
+				authModefields(node);
+			} else {
+				System.err.println("accountType is wrong :: createaccount " + accountType);
+			}
+			
+			String queueName=null;
+			if (accountType.equalsIgnoreCase("AMQP")) {
+				queueName="requestQueue";
+				sendKeys(AlertsAccountsObject.requestQueue, "requestQueue", node.get(queueName).asText());
+			} else if(accountType.equalsIgnoreCase("Jms")) { 
+				queueName="JMSQname";
+				sendKeys(AlertsAccountsObject.requestQueue, "requestQueue", node.get(queueName).asText());
+			}
+			else {
+                 System.out.println("No need requestQueue for this account" + accountType);
+			}
+			sleep(1000);
+			extentTest.info("The Name of account is : " + name_csv);
+			extentTest.info("The " + accountType.toUpperCase() + " account data is : "+ name_csv,
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			sleep(1000);
+			boolean saveAcc = false;
+			if (node.get("Save").asText().equalsIgnoreCase("yes")) {
+				click(AlertsAccountsObject.saveBTN, "saveBTN");
+				saveAcc = true;
+				sleep(500);
+				extentTest.info("The account is saved successfully : " + name_csv,
+						MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				sleep(1500);
+				click(AlertsAccountsObject.alertAccountOK, "alertAccountOK");
+			} else {
+				click(AlertsAccountsObject.cancelBTN, "cancelBTN");
+				saveAcc = true;
+			}
+			backToFrame();
+			waitUntilSpinnerDisappers();
+			waitUntilSpinnerDisappers();
+			moveFrame("bodyframe");
+			waitUntilSpinnerDisappers();
+			searchAccount(name_csv);
+			waitUntilSpinnerDisappers();
+			backToFrame();
+			waitUntilSpinnerDisappers();
+			waitUntilSpinnerDisappers();
+			moveFrame("bodyframe");
+			if (findElementts(AlertsAccountsObject.searchResult).size() > 0 && saveAcc) {
+				extentTest.pass("The created Account is : " + name_csv,
+						MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			} else if (saveAcc) {
+				System.err.println("Cancel BTN is clicked");
+				extentTest.pass("Cancel BTN is clicked");
+				/*
+				 * extentTest.skip("finding for account in the grid",
+				 * MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				 */
+			} else {
+				System.err.println("created account not found in grid");
+				extentTest.fail("created account not found in grid");
+			}
+			clear(AlertsAccountsObject.searchfiled, "searchfiled");
+			backToFrame();
+			waitUntilSpinnerDisappers();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void selectDDforAccounts(String Q_AMQP_name, JsonNode node) {
+		List<WebElement> queueNames = findElementts(AlertsAccountsObject.queueList);
+		int queueNamei = 0;
+		for (WebElement queueName : queueNames) {
+			if (queueName.getText().equalsIgnoreCase(node.get(Q_AMQP_name).asText())) {
+				queueNames.get(queueNamei).click();
+				break;
+			} else {
+				System.err.println("checking for queue :: comparison");
+			}
+			queueNamei++;
+		}
+	}
+	
+	public void authModefields(JsonNode node) {
+		try {
+			sendKeys(AlertsAccountsObject.username, "username", node.get("username").asText());
+			sendKeys(AlertsAccountsObject.password, "password", node.get("password").asText());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void editAccount(JsonNode node) {
+		try {
+			waitUntilSpinnerDisappers();
+			waitUntilSpinnerDisappers();
+			moveFrame("bodyframe");
+			String accountName = node.get("name").asText();
+			searchAccount(accountName);
+			waitUntilSpinnerDisappers();
+			sleep(2000);
+			if (findElementts(AlertsAccountsObject.searchResult).size() > 0) {
+				String searchAccName = findElementt(AlertsAccountsObject.searchAccName).getText();
+				extentTest.info("The found Account is : " + searchAccName);
+				String accountType = findElementt(AlertsAccountsObject.searchAccType).getText();
+				if (findElementts(AlertsAccountsObject.editAccountIcon).size() == 1) {
+					if (findElementt(AlertsAccountsObject.editAccountIcon).isDisplayed()
+							&& findElementt(AlertsAccountsObject.editAccountIcon).isEnabled()) {
+						// click(AlertsAccountsObject.editAccountIcon, "editAccountIcon");
+						clickUsingJSE(findElementt(AlertsAccountsObject.editAccountIcon));
+						sleep(1000);
+						sendKeys(AlertsAccountsObject.description, "description", node.get("description").asText());
+						sleep(500);
+						String Q_AMQP_name=null;
+						if (accountType.equalsIgnoreCase("email") || accountType.equalsIgnoreCase("Sms")) {
+							Q_AMQP_name="queue";
+						} else if(accountType.equalsIgnoreCase("AMQP")) {
+			               Q_AMQP_name="AMQPVendor";
+						}
+						else if(accountType.equalsIgnoreCase("Jms")) {
+				               Q_AMQP_name="JMSclient";
+							}
+						
+						//click(AlertsAccountsObject.queue,"queue");
+						/*click for queue list-email,sms and also AMQP vendor 
+						list select list just DD clicking & Jms client*/
+						List<WebElement> queueli=findElementts(AlertsAccountsObject.queue);
+						queueli.get(0).click();
+						sleep(1000);
+						selectDDforAccounts(Q_AMQP_name, node);
+						
+						if (accountType.equalsIgnoreCase("Jms")) {
+							queueli.get(1).click();
+							sleep(1000);
+							Q_AMQP_name="connectiontype";
+							selectDDforAccounts(Q_AMQP_name, node);
+							sleep(1000);
+							sendKeys(AlertsAccountsObject.connectionurl,"connectionurl",node.get("connectionurl").asText());
+							sendKeys(AlertsAccountsObject.connectionfactory,"connectionfactory",node.get("connectionfactory").asText());
+						} 
+						
+						if (accountType.equalsIgnoreCase("Jms")) {
+							System.out.println("No need host and port for this account : "+accountType);
+						} else {
+							sendKeys(AlertsAccountsObject.host, "host", node.get("host").asText());
+							sendKeys(AlertsAccountsObject.port, "port", node.get("port").asText());
+						}
+			
+						if (accountType.equalsIgnoreCase("email") || accountType.equalsIgnoreCase("Sms")) {
+							sendKeys(AlertsAccountsObject.senderID, "senderID", node.get("senderID").asText());
+						} else {
+			                 System.out.println("No need SENDER ID for this account : "+accountType);
+						}
+						
+						if (accountType.equalsIgnoreCase("AMQP")) {
+							sendKeys(AlertsAccountsObject.virtualhost, "virtualhost", node.get("virtualhost").asText());
+						} else {
+			                 System.out.println("No need virtualhost for this account : "+accountType);
+						}
+
+						if (accountType.equalsIgnoreCase("email")) {
+							sleep(1000);
+							click(AlertsAccountsObject.authentication, "authentication");
+							List<WebElement> authenticationNames = findElementts(
+									AlertsAccountsObject.authenticationList);
+							int authenticationNamei = 0;
+							for (WebElement authenticationName : authenticationNames) {
+								if (authenticationName.getText()
+										.equalsIgnoreCase(node.get("authentication").asText())) {
+									authenticationNames.get(authenticationNamei).click();
+									break;
+								} else {
+									System.err.println("checking for authentication :: comparison");
+								}
+								authenticationNamei++;
+							}
+							sleep(500);
+
+						} else {
+							System.err.println("authenication skipped");
+						}
+
+						if (accountType.equalsIgnoreCase("Email")) {
+							String authMode = findElementt(AlertsAccountsObject.authentication).getAttribute("value");
+							if (!authMode.equalsIgnoreCase("No Authentication")) {
+								authModefields(node);
+							}
+						} else if (accountType.equalsIgnoreCase("Sms")|| accountType.equalsIgnoreCase("AMQP") || accountType.equalsIgnoreCase("Jms")) {
+							authModefields(node);
+						} else {
+							System.err.println("accountType is wrong :: editaccount " + accountType);
+						}
+						String queueName=null;
+						if (accountType.equalsIgnoreCase("AMQP")) {
+							queueName="requestQueue";
+							sendKeys(AlertsAccountsObject.requestQueue, "requestQueue", node.get(queueName).asText());
+						} else if(accountType.equalsIgnoreCase("Jms")) { 
+							queueName="JMSQname";
+							sendKeys(AlertsAccountsObject.requestQueue, "requestQueue", node.get(queueName).asText());
+						}
+						else {
+			                 System.out.println("No need requestQueue for this account" + accountType);
+						}
+						sleep(1000);
+						extentTest.info("The " + accountType.toUpperCase() + " Account data is : " + searchAccName,
+								MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						sleep(1000);
+						if (node.get("Edit").asText().equalsIgnoreCase("yes")) {
+							click(AlertsAccountsObject.updateBTN, "updateBTN");
+							sleep(1000);
+							extentTest.pass("The Account is updated successfully : " + accountName,
+									MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+							sleep(1500);
+							click(AlertsAccountsObject.alertAccountOK, "alertAccountOK");
+						} else {
+							click(AlertsAccountsObject.cancelBTN, "cancelBTN");
+						}
+					} else {
+						extentTest.warning("editAccountIcon is not displayed/enabled");
+					}
+				} else {
+					extentTest.warning("editAccountIcon size not matched");
+					System.err.println("editAccountIcon size not matched");
+				}
+			} else {
+				extentTest.info("no records found :: " + accountName);
+				System.err.println("no records found :: " + accountName);
+			}
+			backToFrame();
+			waitUntilSpinnerDisappers();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void searchAccount(String name) {
+		try {
+			System.out.println("searchAccount : "+name);
+			sendKeys(AlertsAccountsObject.searchfiled, "searchfiled", name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void stopAccount(JsonNode node) {
+		try {
+			waitUntilSpinnerDisappers();
+			String accountName = node.get("name").asText();
+			moveFrame("bodyframe");
+			searchAccount(accountName);
+			backToFrame();
+			waitUntilSpinnerDisappers();
+			moveFrame("bodyframe");
+			sleep(1500);
+			if (findElementts(AlertsAccountsObject.searchResult).size() > 0) {
+				String searchAccName = findElementt(AlertsAccountsObject.searchAccName).getText();
+				extentTest.info("The found Account is : " + searchAccName);
+				if (findElementts(AlertsAccountsObject.stopAccountIcon).size() == 1) {
+					if (findElementt(AlertsAccountsObject.stopAccountIcon).getAttribute("data-qtip").contains("Stop")) {
+						extentTest.info("Before stopping the Account : " + accountName,
+								MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						// click(AlertsAccountsObject.stopAccountIcon, "stopAccountIcon");
+						clickUsingJSE(findElementt(AlertsAccountsObject.stopAccountIcon));
+						sleep(500);
+						click(AlertsAccountsObject.yesBTN, "yesBTN");
+						backToFrame();
+						waitUntilSpinnerDisappers();
+						moveFrame("bodyframe");
+						searchAccount(accountName);
+						backToFrame();
+						waitUntilSpinnerDisappers();
+						moveFrame("bodyframe");
+						if (findElementts(AlertsAccountsObject.searchResult).size() > 0) {
+							if (findElementt(AlertsAccountsObject.startAccountIcon).getAttribute("data-qtip")
+									.contains("Start")) {
+								extentTest.pass("Post stopped the Account : "+accountName,
+										MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+							} else {
+								extentTest.fail("The post not stopping Account : ",
+										MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+							}
+						} else {
+							extentTest.warning("searchResult size not macthed :: post stopping");
+							System.err.println("searchResult size not macthed :: post stopping");
+						}
+
+					} else {
+						extentTest.info("already stopped account " + accountName);
+					}
+
+				} else {
+					System.err.println("stopAccountIcon size not matched");
+					extentTest.warning("stopAccountIcon size not matched");
+				}
+
+			} else {
+				System.err.println("searchResult :: no records found");
+				extentTest.info("searchResult :: no records found " + accountName);
+
+			}
+			clear(AlertsAccountsObject.searchfiled, "searchfiled");
+			backToFrame();
+			waitUntilSpinnerDisappers();
+		} catch (Exception e) {
+			e.printStackTrace();
+			extentTest.info(e);
+		}
+
+	}
+
+	public void startAccount(JsonNode node) {
+		try {
+			waitUntilSpinnerDisappers();
+			String accountName = node.get("name").asText();
+			moveFrame("bodyframe");
+			searchAccount(accountName);
+			backToFrame();
+			waitUntilSpinnerDisappers();
+			moveFrame("bodyframe");
+			if (findElementts(AlertsAccountsObject.searchResult).size() > 0) {
+				String searchAccName = findElementt(AlertsAccountsObject.searchAccName).getText();
+				extentTest.info("The found Account is : " + searchAccName);
+				
+				if (findElementts(AlertsAccountsObject.startAccountIcon).size() == 1) {
+					if (findElementt(AlertsAccountsObject.startAccountIcon).getAttribute("data-qtip")
+							.contains("Start")) {
+						extentTest.info("Before starting the Account : " + accountName,
+								MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						// click(AlertsAccountsObject.startAccountIcon, "startAccountIcon");
+						clickUsingJSE(findElementt(AlertsAccountsObject.startAccountIcon));
+						sleep(500);
+						click(AlertsAccountsObject.yesBTN, "yesBTN");
+						backToFrame();
+						waitUntilSpinnerDisappers();
+						moveFrame("bodyframe");
+						searchAccount(accountName);
+						backToFrame();
+						waitUntilSpinnerDisappers();
+						moveFrame("bodyframe");
+						if (findElementts(AlertsAccountsObject.searchResult).size() > 0) {
+							if (findElementt(AlertsAccountsObject.stopAccountIcon).getAttribute("data-qtip").contains("Stop")) {
+								extentTest.pass("Post started Account : "+accountName,
+										MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+							} else {
+								extentTest.fail("The post starting Account : "+accountName,
+										MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+							}
+						} else {
+							System.err.println("searchResult size not macthed :: post starting");
+						}
+
+					} else {
+						extentTest.info("already started Account " + accountName);
+					}
+
+				} else {
+					extentTest.warning("startAccountIcon size not matched");
+					System.err.println("startAccountIcon size not matched");
+				}
+
+			} else {
+				System.err.println("searchResult :: no records found" + accountName);
+				extentTest.info("searchResult :: no records found " + accountName);
+
+			}
+			clear(AlertsAccountsObject.searchfiled, "searchfiled");
+			backToFrame();
+			waitUntilSpinnerDisappers();
+		} catch (Exception e) {
+			e.printStackTrace();
+			extentTest.info(e);
+		}
+
+	}
+
+	public void deleteAccount(JsonNode node) {
+		try {
+			waitUntilSpinnerDisappers();
+			moveFrame("bodyframe");
+			String accountName = node.get("name").asText();
+			searchAccount(accountName);
+			backToFrame();
+			waitUntilSpinnerDisappers();
+			waitUntilSpinnerDisappers();
+			moveFrame("bodyframe");
+			List<WebElement> saname=findElementts(AlertsAccountsObject.searchAccName);
+			if (findElementts(AlertsAccountsObject.searchResult).size() == 1 && findElementts(AlertsAccountsObject.searchAccName).size()==1) {
+				String searchAccName = findElementt(AlertsAccountsObject.searchAccName).getText();
+				extentTest.info("The found Account is : " + searchAccName);
+				if (accountName.equals(searchAccName)) {
+					if (findElementts(AlertsAccountsObject.deleteAccountIcon).size() == 1) {
+						extentTest.info("Before deleting Account : " + accountName,
+								MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						// click(AlertsAccountsObject.deleteAccountIcon, "deleteAccountIcon");
+						clickUsingJSE(findElementt(AlertsAccountsObject.deleteAccountIcon));
+						sleep(1000);
+						click(AlertsAccountsObject.yesBTN, "yesBTN");
+						backToFrame();
+						waitUntilSpinnerDisappers();
+						moveFrame("bodyframe");
+						searchAccount(accountName);
+						backToFrame();
+						waitUntilSpinnerDisappers();
+						moveFrame("bodyframe");
+						// System.err.println("::: size --- " +
+						// findElementts(AlertsAccountsObject.searchResult).size());
+						if (findElementts(AlertsAccountsObject.searchResult).size() == 0) {
+							extentTest.pass("Post deleted the Account : " + accountName,
+									MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						} else {
+							extentTest.fail("The post not deleting Account " + accountName,
+									MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+						}
+					} else {
+						extentTest.warning("deleteAccountIcon size not matched");
+						System.err.println("deleteAccountIcon size not matched");
+					}
+				} else {
+					System.err.println("mismacthed accounts " + accountName + " , " + searchAccName);
+					extentTest.fail("mismacthed accounts " + accountName + " , " + searchAccName);
+				}
+			} else {
+				System.err
+				.println("no records found : deletion Account :: searchResult size not matched" + accountName);
+				extentTest.info("no records found : deletion Account :: searchResult size not matched " + accountName);
+			}
+			clear(AlertsAccountsObject.searchfiled, "searchfiled");
+			backToFrame();
+			waitUntilSpinnerDisappers();
+		} catch (Exception e) {
+			e.printStackTrace();
+			extentTest.info(e);
+		}
+	}
+}

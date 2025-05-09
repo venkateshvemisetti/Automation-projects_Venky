@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="6" passed="6" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2024-05-30T12:16:17 IST" name="Suite" finished-at="2024-05-30T12:19:28 IST" duration-ms="191016">
+    <groups>
+    </groups>
+    <test started-at="2024-05-30T12:16:17 IST" name="Test" finished-at="2024-05-30T12:19:28 IST" duration-ms="191016">
+      <class name="com.geidea.testcases.ApplicationProcessingTestcase">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.geidea.testcases.ApplicationProcessingTestcase@383dc82c]" started-at="2024-05-30T12:17:24 IST" name="beforeClass" finished-at="2024-05-30T12:17:24 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.geidea.testcases.ApplicationProcessingTestcase@383dc82c]" started-at="2024-05-30T12:17:24 IST" name="extentTest" finished-at="2024-05-30T12:17:24 IST" duration-ms="27" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.geidea.testcases.ApplicationProcessingTestcase.searchApplication()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="searchApplication()[pri:1, instance:com.geidea.testcases.ApplicationProcessingTestcase@383dc82c]" started-at="2024-05-30T12:17:24 IST" name="searchApplication" finished-at="2024-05-30T12:17:31 IST" duration-ms="7634" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- searchApplication -->
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.geidea.testcases.ApplicationProcessingTestcase@383dc82c]" started-at="2024-05-30T12:17:31 IST" name="extentTest" finished-at="2024-05-30T12:17:31 IST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.geidea.testcases.ApplicationProcessingTestcase.editApplication()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="editApplication()[pri:2, instance:com.geidea.testcases.ApplicationProcessingTestcase@383dc82c]" started-at="2024-05-30T12:17:31 IST" name="editApplication" finished-at="2024-05-30T12:18:51 IST" duration-ms="80105" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- editApplication -->
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.geidea.testcases.ApplicationProcessingTestcase@383dc82c]" started-at="2024-05-30T12:18:51 IST" name="extentTest" finished-at="2024-05-30T12:18:51 IST" duration-ms="5" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.geidea.testcases.ApplicationProcessingTestcase.addBusinessDeatils()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="addBusinessDeatils()[pri:5, instance:com.geidea.testcases.ApplicationProcessingTestcase@383dc82c]" started-at="2024-05-30T12:18:51 IST" name="addBusinessDeatils" finished-at="2024-05-30T12:19:25 IST" duration-ms="33912" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- addBusinessDeatils -->
+      </class> <!-- com.geidea.testcases.ApplicationProcessingTestcase -->
+      <class name="com.geidea.testcases.AdminTestcase">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.geidea.testcases.AdminTestcase@61710c6]" started-at="2024-05-30T12:17:07 IST" name="beforeClass" finished-at="2024-05-30T12:17:07 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.geidea.testcases.AdminTestcase@61710c6]" started-at="2024-05-30T12:17:07 IST" name="extentTest" finished-at="2024-05-30T12:17:07 IST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.geidea.testcases.AdminTestcase.ApplicationClick()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="ApplicationClick()[pri:0, instance:com.geidea.testcases.AdminTestcase@61710c6]" started-at="2024-05-30T12:17:07 IST" name="ApplicationClick" finished-at="2024-05-30T12:17:24 IST" duration-ms="16355" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ApplicationClick -->
+      </class> <!-- com.geidea.testcases.AdminTestcase -->
+      <class name="com.geidea.testcases.LoginTestcase">
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.geidea.testcases.LoginTestcase@45efd90f]" started-at="2024-05-30T12:16:37 IST" name="beforeClass" finished-at="2024-05-30T12:16:37 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.geidea.testcases.LoginTestcase@45efd90f]" started-at="2024-05-30T12:16:37 IST" name="extentTest" finished-at="2024-05-30T12:16:37 IST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.geidea.testcases.LoginTestcase.loginApplication()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="loginApplication()[pri:0, instance:com.geidea.testcases.LoginTestcase@45efd90f]" started-at="2024-05-30T12:16:37 IST" name="loginApplication" finished-at="2024-05-30T12:17:07 IST" duration-ms="30007" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginApplication -->
+      </class> <!-- com.geidea.testcases.LoginTestcase -->
+      <class name="com.geidea.testcases.OpenBrowserTestcase">
+        <test-method is-config="true" signature="extentReportStart()[pri:0, instance:com.geidea.testcases.OpenBrowserTestcase@50f6ac94]" started-at="2024-05-30T12:16:16 IST" name="extentReportStart" finished-at="2024-05-30T12:16:17 IST" duration-ms="546" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentReportStart -->
+        <test-method is-config="true" signature="beforeClass()[pri:0, instance:com.geidea.testcases.OpenBrowserTestcase@50f6ac94]" started-at="2024-05-30T12:16:17 IST" name="beforeClass" finished-at="2024-05-30T12:16:17 IST" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.geidea.testcases.OpenBrowserTestcase@50f6ac94]" started-at="2024-05-30T12:16:17 IST" name="extentTest" finished-at="2024-05-30T12:16:17 IST" duration-ms="10" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.geidea.testcases.OpenBrowserTestcase.openApplication()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="openApplication()[pri:0, instance:com.geidea.testcases.OpenBrowserTestcase@50f6ac94]" started-at="2024-05-30T12:16:17 IST" name="openApplication" finished-at="2024-05-30T12:16:37 IST" duration-ms="20316" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openApplication -->
+        <test-method is-config="true" signature="extentReportEnd(java.lang.String)[pri:0, instance:com.geidea.testcases.OpenBrowserTestcase@50f6ac94]" started-at="2024-05-30T12:19:25 IST" name="extentReportEnd" finished-at="2024-05-30T12:19:28 IST" duration-ms="2440" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[false]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentReportEnd -->
+      </class> <!-- com.geidea.testcases.OpenBrowserTestcase -->
+    </test> <!-- Test -->
+  </suite> <!-- Suite -->
+</testng-results>

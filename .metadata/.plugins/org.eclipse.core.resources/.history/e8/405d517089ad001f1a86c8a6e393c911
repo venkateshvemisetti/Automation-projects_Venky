@@ -1,0 +1,30 @@
+package com.rjio.pages;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.rjio.accelator.ActionWrappers;
+
+public class OpenBrowserPage extends ActionWrappers {
+
+	public void setBrowser() {
+		try {
+			setBrowserType();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void openURL(JsonNode node) {
+		try {
+			openAppURL(node.get("appURL").asText());
+			String appTitle=driver.getTitle()
+			extentTest.info("RJIO-NE Application is",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+	}
+
+}

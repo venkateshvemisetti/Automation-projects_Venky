@@ -1,0 +1,11 @@
+package com.rjio.objects;
+
+import org.openqa.selenium.By;
+
+public class ApplicationsObject {
+	public static By alertApplicationLink=By.xpath("//td[contains(text(),'Alerts Queues')]");
+	public static By createQueue = By.xpath("//td[@name='tblCreate']");
+	public static By name=By.xpath("//input[@name='name']");
+	public static By description=By.xpath("//textarea[@name='description']");
+
+}

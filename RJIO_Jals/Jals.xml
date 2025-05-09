@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Suite">
+	<test name="Test">
+		<parameter name="actiontypeSms" value="Sms" />
+		<parameter name="actiontypeEmail" value="Email" />
+		<classes>
+			<class name="com.rjio.testcases.OpenBrowserTestcase" />
+			<class name="com.rjio.testcases.LoginTestcase" />
+			<class name="com.rjio.testcases.RJIONElinkTestcase" />
+			<!--<class name="com.rjio.testcases.AlertsActionsTestcase" />-->
+			
+			<class name="com.rjio.testcases.AlertsActionsTestcase">
+				<methods>
+					<include name="createSMSAction"></include> 
+					<include name="enableSMSAction"></include> 
+					<include name="disableSMSAction"></include>
+					<include name="deleteSMSAction"></include>
+					<include name="createEmailAction"></include> 
+								</methods>
+				</class>
+				<class name="com.rjio.testcases.AlertsActionsTestcase">
+				<methods>
+					<exclude name="createSMSAction"></exclude> 
+					<include name="createEmailAction"></include> 
+					<include name="enableEmailAction"></include> 
+					<include name="disableEmailAction"></include>
+					<include name="deleteEmailAction"></include>
+								</methods>
+				</class>
+			<class name="com.rjio.testcases.ListenerTestcase">
+				<methods>
+					<exclude name="createListener"></exclude> 
+					<include name="editListener"></include> 
+					<include name="startListener"></include> 
+					<include name="stopListener"></include>
+					<include name="deleteListener"></include>
+								</methods>
+				</class>
+			
+			
+		</classes>
+	</test>
+</suite> 
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Suite">
+	<test name="Test">
+		<parameter name="ZIPRequired" value="false" />
+		<classes>
+			<class name="com.rjio.testcases.OpenBrowserTestcase" />
+			<class name="com.rjio.testcases.LoginTestcase" />
+			<class name="com.rjio.testcases.RJIONElinkTestcase" />
+			<class name="com.rjio.testcases.ListenerTestcase">
+				<methods>
+					<include name="createFileListener"></include>
+					<include name="editFileListener"></include>
+					<include name="startListener"></include>
+					<include name="stopListener"></include>
+					<include name="deleteListener"></include>
+				</methods>
+			</class>
+			<class name="com.rjio.testcases.LogoutTestcase">
+				<methods>
+					<include name="logoutApplication"></include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+</suite> 
+

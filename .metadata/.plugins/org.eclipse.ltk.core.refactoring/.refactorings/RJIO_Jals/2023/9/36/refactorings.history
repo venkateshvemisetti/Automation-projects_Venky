@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;CreateExtentReportsZIP.java&apos; to &apos;RJIO_Jals/src/test/java/com.rjio.accelator&apos;&#x0D;&#x0A;- Original project: &apos;RJIO_Jals&apos;&#x0D;&#x0A;- Destination element: &apos;RJIO_Jals/src/test/java/com.rjio.accelator&apos;&#x0D;&#x0A;- Original element: &apos;CreateExtentReportsZIP.java&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="/src\/test\/java=/test=/true=/=/optional=/true=/=/maven.pomderived=/true=/&lt;com.rjio.accelator" element1="/src\/test\/java=/test=/true=/=/optional=/true=/=/maven.pomderived=/true=/&lt;{CreateExtentReportsZIP.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1694166556560" units="1" version="1.0"/>
+</session>

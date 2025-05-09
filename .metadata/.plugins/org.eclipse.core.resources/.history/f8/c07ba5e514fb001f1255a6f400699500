@@ -1,0 +1,129 @@
+package com.intense.services;
+
+import java.io.File;
+
+import javax.jms.Connection;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.Session;
+import javax.jms.TextMessage;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.apache.activemq.ActiveMQConnectionFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+public class PushReqXML {
+
+	public static void main(String[] args) {
+		
+		PushReqXML p=new PushReqXML();
+		p.writeReqXML();
+
+	}
+	public void writeReqXML() {
+		try {
+			File fis = new File("SKYC_MH.xml");
+			DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dbuilder = null;
+			dbuilder = dbfactory.newDocumentBuilder();
+			Document doc = null;
+			doc = dbuilder.parse(fis);
+			NodeList nodes;
+			Element element;
+			nodes = doc.getElementsByTagName("orderRefNumber");
+			element = (Element) nodes.item(0);
+			element.setTextContent("ORN123");
+
+			nodes=doc.getElementsByTagName("CustomerAcquisitionAgreement");
+			element = (Element) nodes.item(0);
+			element.getElementsByTagName("number").item(0).setTextContent("CAF1234");
+			
+			nodes=doc.getElementsByTagName("customer");
+			element = (Element) nodes.item(0);
+			element.getElementsByTagName("partyId").item(0).setTextContent("567566");
+			
+			
+			nodes= doc.getElementsByTagName("Identifier");
+			 element = (Element) nodes.item(0);
+			 element.getElementsByTagName("name").item(0).setTextContent("MSISDN");
+			 element.getElementsByTagName("value").item(0).setTextContent("60666056245");
+			
+			nodes = doc.getElementsByTagName("ResourceCharacteristic");
+			element = (Element) nodes.item(0);
+			element.getElementsByTagName("name").item(0).setTextContent("EID");
+			element.getElementsByTagName("value").item(0).setTextContent("1eid654");
+			
+		
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(fis);
+			transformer.transform(source, result);
+
+			/*--------------------------To print on console----------*/
+			// StreamResult consoleResult = new StreamResult(System.out);
+			// transformer.transform(source, consoleResult);
+
+			System.out.println("XML file updated successfully.");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		public void pushToQueue() {
+			String brokerURL = "tcp://172.16.0.227:61616";  // ActiveMQ broker URL
+	        String queueName = "MNP_AIDUI_VALIDATION_Q1";         // Name of the already existing queue
+
+	        // Create a connection factory
+	        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerURL);
+	        
+	        // Sample XML content
+	        String messageIP = "{\r\n"
+	        		+ "    \"resultStatus\": {\r\n"
+	        		+ "        \"status\": \"SUCCESS\"\r\n"
+	        		+ "    },\r\n"
+	        		+ "    \"transc_id\": \"DKYC00034943\",\r\n"
+	        		+ "    \"upc\": \"xyz\",\r\n"
+	        		+ "    \"msisdn\": \"9810798107\"\r\n"
+	        		+ "}";
+
+	        try {
+	            // Create a connection
+	            Connection connection = connectionFactory.createConnection();
+	            connection.start();  // Start the connection
+
+	            // Create a session
+	            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+	            // Lookup the existing queue (no need to create it, assuming it already exists)
+	            Destination queue = session.createQueue(queueName);
+
+	            // Create a producer to send a message to the queue
+	            MessageProducer producer = session.createProducer(queue);
+	            TextMessage message = session.createTextMessage(messageIP);
+	            
+	            // Send the XML message to the existing queue
+	            producer.send(message);
+	            System.out.println("Sent to queue :: " + messageIP);
+
+	            // Clean up
+	            producer.close();
+	            session.close();
+	            connection.close();
+	        } catch (JMSException e) {
+	            e.printStackTrace();
+	        }
+	    }
+		}
+	}
+
+
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Suite">
+	<test name="Test">
+		<parameter name="actiontypeSms" value="Sms" />
+		<parameter name="actiontypeEmail" value="Email" />
+		<parameter name="ZIPRequired" value="true" />
+		<classes>
+			<class name="com.rjio.testcases.OpenBrowserTestcase" />
+			<class name="com.rjio.testcases.LoginTestcase" />
+			<class name="com.rjio.testcases.RJIONElinkTestcase" />
+			<!--<class name="com.rjio.testcases.AlertsActionsTestcase" />-->
+
+			<class name="com.rjio.testcases.AlertsActionsTestcase">
+				<methods>
+					<include name="createSMSAction"></include>
+					<include name="editSMSAction"></include>s
+					<include name="enableSMSAction"></include>
+					<include name="disableSMSAction"></include>
+					<include name="deleteSMSAction"></include>
+				</methods>
+			</class>
+			<class name="com.rjio.testcases.AlertsActionsTestcase">
+				<methods>
+					<include name="createEmailAction"></include>
+					<include name="editEmailAction"></include>
+					<include name="enableEmailAction"></include>
+					<include name="disableEmailAction"></include>
+					<include name="deleteEmailAction"></include>
+				</methods>
+			</class>
+			<class name="com.rjio.testcases.LogoutTestcase">
+				<methods>
+					<include name="logoutApplication"></include>
+			</methods>
+			</class>
+		</classes>
+	</test>
+</suite> 
+

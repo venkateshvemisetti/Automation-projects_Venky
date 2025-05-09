@@ -1,0 +1,111 @@
+package com.rjio.pages;
+
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.rjio.accelator.ActionWrappers;
+import com.rjio.objects.LoginObject;
+
+public class LoginPage extends ActionWrappers {
+
+
+
+	public void username(JsonNode node) {
+		try {
+			if (findElementts(LoginObject.username).size() > 0) {
+				sendKeys(LoginObject.username, "username", node.get("username").asText());
+				extentTest.info("Username is entered : "node.get("username").asText());
+				//extentTest.info("Entered username is " + re.readExcel("Login", 5, 1));
+			} else {
+				System.err.println("username size is not matched");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void password(JsonNode node) {
+		try {
+			//String password=;
+			if (findElementts(LoginObject.password).size() > 0) {
+				sendKeys(LoginObject.password, "password", node.get("password").asText());
+				extentTest.info("Password is entered");
+				//extentTest.info("Entered password is " + re.readExcel("Login", 6, 1));
+			} else {
+				System.err.println("password size is not matched");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void loginUser(JsonNode node) {
+		try {
+			username(node);
+			password(node);
+			List<WebElement> loginbts=findElementts(LoginObject.loginBTN);
+			if (loginbts.size() > 0) {
+				if (loginbts.get(0).isEnabled()
+						&& loginbts.get(0).isDisplayed()) {
+					//extentTest.info("The application is ",MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				//click(LoginObject.loginBTN, "loginBTN");
+					loginbts.get(0).click();
+					extentTest.info("Login Button is clicked");
+					
+				} else {
+					System.err.println("loginBTN is not enabled/displayed");
+				}
+
+			} else {
+				System.out.println("loginBTN size is not matched");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void logoutOthers(JsonNode node) {
+		try {
+			loginUser(node);
+			if (findElementts(LoginObject.otherLogoutText).size() > 0) {
+				if (!(findElementt(LoginObject.logoutOtherUserRBTN).isSelected())) {
+					click(LoginObject.logoutOtherUserRBTN, "logoutOtherUserRBTN");
+				} else {
+					System.err.println("logoutOtherUserRBTN already selected");
+				}
+				if (findElementt(LoginObject.submitBTN).isDisplayed()) {
+					click(LoginObject.submitBTN, "submitBTN");
+					System.out.println("submitBTN :: Other User loggedout successfully");
+					//extentTest.log(Status.INFO, "Other User loggedout successfully");
+					sleep(1500);
+					loginUser(node);
+				} else {
+					System.err.println("submitBTN is not displayed");
+				}
+
+			} else {
+				/*
+				 * extentTest.error("otherLogoutText size is not matched",
+				 * MediaEntityBuilder.createScreenCaptureFromPath( "size is " +
+				 * findElementts(LoginObject.otherLogoutText).size(), takeScreenShot())
+				 * .build());
+				 */
+				System.err.println("otherLogoutText size is not matched");
+				//extentTest.log(Status.INFO, "Other user is not logging with same userID");
+			}
+			extentTest.pass("The Application is opened ",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+		
+	}
+
+

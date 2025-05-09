@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite]">
+  <test thread-count="5" name="Test(failed)">
+    <parameter name="accountTypeEmail" value="Email"/>
+    <parameter name="accountTypeSms" value="Sms"/>
+    <parameter name="ZIPRequired" value="true"/>
+    <classes>
+      <class name="com.rjio.testcases.LogoutTestcase">
+        <methods>
+          <include name="extentTest"/>
+          <include name="extentReportEnd"/>
+          <include name="logoutApplication"/>
+          <include name="extentReportStart"/>
+          <include name="beforeClass"/>
+        </methods>
+      </class> <!-- com.rjio.testcases.LogoutTestcase -->
+      <class name="com.rjio.testcases.OpenBrowserTestcase">
+        <methods>
+          <include name="extentReportEnd"/>
+        </methods>
+      </class> <!-- com.rjio.testcases.OpenBrowserTestcase -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->

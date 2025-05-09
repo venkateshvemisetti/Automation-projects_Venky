@@ -1,0 +1,390 @@
+package com.rjio.accelator;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.lang.reflect.Method;
+import java.time.Duration;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+public class ActionWrappers {
+	ReadProperties rp = new ReadProperties();
+	public static WebDriver driver = null;
+	public static ExtentReports extent;
+	public static ExtentTest extentTest;
+	public static ExtentTest extentParentTest;
+
+	@SuppressWarnings("deprecation")
+	public void setBrowserType() {
+		try {
+			String cdriverpath = rp.readPro("ChromeDriverPath");
+			System.out.println("start of method :: setBrowserType()");
+			System.setProperty("webdriver.chrome.driver", cdriverpath);
+			driver = new ChromeDriver();
+			System.out.println(driver);
+			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+			System.out.println("End of method :: setBrowserType()");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void openAppURL(String baseurl) {
+		try {
+			System.out.println("calling of method :: openAppURL() :: " + baseurl);
+			driver.get(baseurl);
+			driver.manage().window().maximize();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void click(By path, String lablename) {
+		try {
+			// findElementts(path).size();
+			driver.findElement(path).click();
+			System.out.println("click action on :: " + lablename);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void sendKeys(By path, String lablename, String value) {
+		try {
+
+			// driver.findElement(path).sendKeys(value);
+			clear(path, lablename);
+			findElementt(path).sendKeys(value);
+			System.out.println("sendkeys action on :: " + lablename + " value :: " + value);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	public void clear(By path, String lablename) {
+		try {
+			findElementt(path).clear();
+			System.out.println("clear action on ::" + lablename);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		catch (Throwable t) {
+			t.printStackTrace();
+
+		}
+
+	}
+
+	public WebElement findElementt(By path) {
+		WebElement wb;
+		wb = driver.findElement(path);
+		return wb;
+
+	}
+	public void customWait(WebElement element) {
+		WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(90));
+		wait.until(ExpectedConditions.visibilityOf(element));
+	}
+	public void customWait(List<WebElement> element) {
+		System.out.println("custom wait calling:::: ");
+		WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(90));
+		wait.until(ExpectedConditions.visibilityOfAllElements(element));
+		System.out.println("custom wait ended:::: ");
+	}
+
+	public List<WebElement> findElementts(By path) {
+		List<WebElement> wb;
+		wb = driver.findElements(path);
+		return wb;
+
+	}
+
+	public void sleep(long sec) {
+		try {
+			long a=sec+3;
+			Thread.sleep(a);
+			System.err.println("paused : " + sec);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void moveFrame(String frameName) {
+		try {
+			System.out.println("change frame :: moveFrame() " + frameName);
+			driver.switchTo().frame(frameName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void backToFrame() {
+		try {
+			System.out.println(" :: back to change frame :: backToFrame()");
+			driver.switchTo().defaultContent();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@BeforeSuite
+	public void extentReportStart() {
+		try {
+			Date date = new Date();
+			// String path = "D:\\\\Automation-Projects\\\\UnipackReports\\\\";
+			String reportpath = rp.readPro("ReportsPath");
+			File file = new File(reportpath + date.getDate());
+			file.mkdir();
+			String reportfilename = rp.readPro("Reportfilename");
+
+			// ExtentHtmlReporter htmlReporter = new
+			// ExtentHtmlReporter("E:\\AutomationProjects\\Reports\\unipack.html");
+			int ranNum = ThreadLocalRandom.current().nextInt();
+
+			ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(
+					reportpath + date.getDate() + "//" + reportfilename + "_" + ranNum + ".html");
+			htmlReporter.setAppendExisting(false);
+			/*
+			 * Random random = new Random(); random.nextLong();
+			 */
+			extent = new ExtentReports();
+			extent.attachReporter(htmlReporter);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/*-----------getClassName(lip.getClass().getName()),1)---*/
+	public String getClassName(String name) {
+		String classname = name.substring(name.lastIndexOf(".") + 1);
+		return classname;
+
+	}
+
+	public JsonNode getRowData(String pageName, int rowNum) throws Exception {
+		String csvFile = ".//Test_Data-Files//" + pageName + ".csv";
+		String line = "";
+		String cvsSplitBy = "\\|";
+		int i = rowNum - 1;
+		ArrayNode fields = null;
+		File file = new File(csvFile);
+		if (!file.exists()) {
+			if (csvFile.contains("_")) {
+				String[] arrayStrings = csvFile.split("-");
+				if (arrayStrings.length > 1) {
+					csvFile = ".//Test_Data-Files//" + pageName + "_" + arrayStrings[1] + ".csv";
+				} else {
+					System.err.println("arrayStrings size is not matched");
+				}
+			}
+		}
+		System.out.println("CSV file : " + csvFile);
+		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+			int currentLine = 0;
+
+			while (currentLine < rowNum - 1 && (line = br.readLine()) != null) {
+				currentLine++;
+			}
+			if (currentLine == rowNum - 1) {
+				while ((line = br.readLine()) != null) {
+					String[] headers = line.split(cvsSplitBy);
+					if (i == rowNum - 1) {
+						fields = JSONUtils.createArrayNode();
+						for (String head : headers) {
+							fields.add(head.trim());
+						}
+						System.out.println("fields == " + fields);
+						i++;
+						continue;
+					}
+					if (i == rowNum) {
+						ObjectNode rowData = JSONUtils.createObjectNode();
+						int j = 0;
+						for (String head : headers) {
+							rowData.put(fields.get(j).asText(), head);
+							j++;
+						}
+						System.out.println("rowData == " + rowData);
+						return rowData;
+					}
+					i++;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@BeforeMethod
+	public void extentTest(Method m) {
+		try {
+			Test annonation = m.getAnnotation(Test.class);
+			String description = annonation.description();
+			if (!hasChildTest()) {
+				extentTest = extent.createTest(m.getName());
+			} else {
+				extentTest = extentParentTest.createNode(m.getName(), description);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	protected boolean hasChildTest() throws Exception {
+		return false;
+	}
+
+	protected String getParentTestName() {
+		return this.getClass().getName();
+
+	}
+
+	@BeforeClass
+	public void beforeClass() {
+		try {
+			if (hasChildTest()) {
+				extentParentTest = extent.createTest(getParentTestName());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Parameters({ "ZIPRequired" })
+	@AfterTest
+	public void extentReportEnd(String ZIPReq) {
+		try {
+			extent.flush();
+			if (ZIPReq.equals("true")) {
+				CreateExtentReportsZIP cezip=new CreateExtentReportsZIP();
+				cezip.createExtentReportZip();
+			}
+			// driver.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String takeScreenShot() {
+		try {
+			Date date = new Date();
+			File file = new File(rp.readPro("ScreeShotsPath") + date.getDate());
+			file.mkdir();
+			String filename = rp.readPro("ScreeShotsPath") + date.getDate() + "//" + System.currentTimeMillis()
+			+ ".png";
+
+			File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(screenshotFile, new File(filename));
+			return filename;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public static void waitUntilSpinnerDisappers(){
+		try {
+			System.err.println("Inside spinner...");
+			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+			boolean flag = true;
+			List<WebElement> element = driver.findElements(
+					By.xpath("//div[@class='x-mask-msg']/div"));
+			while(flag==true){
+				if(element.size()>0){
+					if(element.get(0).isDisplayed()){
+						Thread.sleep(1000);
+						System.err.println("Still spinner is routating...");
+					}
+					else{
+						System.out.println("not displayed");
+					}
+				}
+				else{
+					System.err.println(" spinner is diapper...");
+					Thread.sleep(1000);
+					flag=false;
+					break;
+				}
+				if(flag==false){
+					break;
+				}
+			}
+			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+	}
+	
+	
+	public static void waitUntilListDisappers(){
+		try {
+			System.err.println("Inside spinner...");
+			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+			boolean flag = true;
+			List<WebElement> element = driver.findElements(
+					By.xpath("//div[@role='presentation']/div[contains(text(),'Loading...')]"));
+			while(flag==true){
+				if(element.size()>0){
+					if(element.get(0).isDisplayed()){
+						Thread.sleep(1000);
+						System.err.println("Still spinner is routating...");
+					}
+					else{
+						System.out.println("waitUntilListDisappers :: not displayed");
+					}
+				}
+				else{
+					System.err.println(" spinner is diapper...");
+					Thread.sleep(1000);
+					flag=false;
+					break;
+				}
+				if(flag==false){
+					break;
+				}
+			}
+			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+	}
+}

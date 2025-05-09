@@ -1,0 +1,31 @@
+name|description|queue|senderID|host|port|username|password|Save
+SMS_AT07|created by intense|default_queue|abc|172.17.9.98|7878|intense|intense@123|yes
+
+name|description|queue|senderID|host|port|username|password|Edit
+SMS_AT07|created by intense tech|default_queue|abc|172.17.9.98|7878|intense|intense@123|yes
+
+name|description|queue|senderID|host|port|authentication|username|password|Save
+Email_AT07|created by intense|default_queue|abc|172.17.9.98|7878|Authentication|intense|intense@123|yes
+
+name|description|queue|senderID|host|port|authentication|username|password|Edit
+Email_AT07|created by intense tech|default_queue|xyz|172.17.9.98|7878|Authentication|intense|intense@123|yes
+
+name|description|AMQPVendor|host|port|virtualhost|username|password|requestQueue|Save
+Test_AMQPACC|created by intense|RabbitMQ|10.255.0.51|5672|/|intense|intense|RJIO_SV|yes
+
+name|description|AMQPVendor|host|port|virtualhost|username|password|requestQueue|Edit
+Test_AMQPACC|created by venky|RabbitMQ|10.255.0.51|5672|/|admin|intense|RJIO_SV|yes
+
+name|description|JMSclient|connectiontype|connectionurl|connectionfactory|username|password|JMSQname|Save
+Test_JMSAcc|created by intense|ActiveMQ|TCP|tcp://172.16.0.227:61616|jms/samplefactory|intense|intense|1993_SOAP|yes
+
+name|description|JMSclient|connectiontype|connectionurl|connectionfactory|username|password|JMSQname|Edit
+Test_JMSAcc|created by venky|ActiveMQ|TCP|tcp://172.16.0.227:61616|jms/samplefactory|admin|intense|1993_SOAP|yes
+
+
+
+
+No Authentication
+Authentication
+Authentication using TLS
+

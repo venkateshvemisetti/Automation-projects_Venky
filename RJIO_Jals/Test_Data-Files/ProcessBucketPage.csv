@@ -1,0 +1,5 @@
+bucketName|description|workerSize|priority|ruleDefinition|account|useAccountCheck|Save
+2023_B|created on today|23|86|templateName == 'SCP_JU_2023'|JIO_MUM_ERECH_TX|yes|no
+
+bucketName|description|workerSize|priority|ruleDefinition|account|useAccountCheck|Edit
+2023_B|created by intense|23|98|templateName == 'SCP_JU_2023'|INTENSE_SMS|no|yes

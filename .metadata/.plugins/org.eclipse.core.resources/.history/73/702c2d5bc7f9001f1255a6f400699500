@@ -1,0 +1,43 @@
+import org.apache.activemq.ActiveMQConnectionFactory;
+import javax.jms.*;
+
+public class Test {
+    public static void main(String[] args) {
+        // ActiveMQ connection parameters
+        String brokerURL = "tcp://localhost:61616";  // ActiveMQ broker URL
+        String queueName = "existingQueue";         // Name of the already existing queue
+
+        // Create a connection factory
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerURL);
+        
+        // Sample XML content
+        String xmlMessage = "<person><name>John Doe</name><age>30</age><city>New York</city></person>";
+
+        try {
+            // Create a connection
+            Connection connection = connectionFactory.createConnection();
+            connection.start();  // Start the connection
+
+            // Create a session
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+            // Lookup the existing queue (no need to create it, assuming it already exists)
+            Destination queue = session.createQueue(queueName);
+
+            // Create a producer to send a message to the queue
+            MessageProducer producer = session.createProducer(queue);
+            TextMessage message = session.createTextMessage(xmlMessage);
+            
+            // Send the XML message to the existing queue
+            producer.send(message);
+            System.out.println("XML message sent to queue: " + xmlMessage);
+
+            // Clean up
+            producer.close();
+            session.close();
+            connection.close();
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+    }
+}

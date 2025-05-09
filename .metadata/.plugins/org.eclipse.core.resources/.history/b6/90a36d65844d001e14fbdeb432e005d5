@@ -1,0 +1,188 @@
+package com.rjio.pages;
+
+import org.openqa.selenium.support.ui.Select;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.rjio.accelator.ActionWrappers;
+
+import com.rjio.objects.ListenersObject;
+
+public class ListenersPage extends ActionWrappers {
+
+
+	public void listenerLink() {
+		try {
+			sleep(1000);
+			if (findElementts(ListenersObject.listenerLink).size() > 0) {
+				if (findElementt(ListenersObject.listenerLink).isDisplayed()) {
+					click(ListenersObject.listenerLink, "listenerLink");
+				} else {
+					System.err.println("listenerLink is not displayed");
+				}
+			} else {
+				System.err.println("listenerLink size is not matched");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void createListener(JsonNode node) {
+		try {
+			sleep(2000);
+			moveFrame("bodyframe");
+			Select listeners = new Select(findElementt(ListenersObject.addListenerDD));
+			listeners.selectByVisibleText("File");
+			sleep(1500);
+			String name_csv=node.get("name").asText();
+			extentTest.info("The name of listener : "+name_csv);
+			sendKeys(ListenersObject.name, "name", node.get("name").asText());
+			sendKeys(ListenersObject.description, "description",node.get("description").asText());
+			sendKeys(ListenersObject.folderPath, "folderPath", node.get("folderPath").asText());
+			sleep(1500);
+			if (node.get("Save").asText().equalsIgnoreCase("yes")) {
+				extentTest.info("Listener data is : "+name_csv,
+						MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				click(ListenersObject.saveBTN, "saveBTN");
+				sleep(2000);
+				extentTest.pass("The Listener is saved successfully : "+name_csv,
+						MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				click(ListenersObject.alerListenerOK, "alerListenerOK");
+			} 
+			else
+			{
+				System.err.println(" cancel required...");
+			}
+			backToFrame();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void searchListener(String name) {
+		try {
+			sendKeys(ListenersObject.searchfiled, "searchfiled", name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void EditListener(JsonNode node) {
+		try {
+			
+			sleep(4000);
+			moveFrame("bodyframe");
+			String listenerName = node.get("name").asText();
+			searchListener(listenerName);
+			sleep(3000);
+			click(ListenersObject.editIcon, "editIcon");
+			sleep(1000);
+			sendKeys(ListenersObject.description, "description",node.get("description").asText());
+			sendKeys(ListenersObject.folderPath, "folderPath", node.get("folderPath").asText());
+			sleep(2000);
+			if (node.get("Edit").asText().equalsIgnoreCase("yes")) {
+				extentTest.info("The listener is : "+listenerName,
+						MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				click(ListenersObject.saveBTN, "saveBTN");
+				sleep(2000);
+				extentTest.info("The Listener is updated successfully",
+						MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				click(ListenersObject.alerListenerOK, "alerListenerOK");
+			} else {
+System.err.println("no need edit");
+			}
+			backToFrame();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void startListener(JsonNode node) {
+		try {
+			
+			sleep(4000);
+			moveFrame("bodyframe");
+			String listenerName = node.get("name").asText();
+			searchListener(listenerName);
+			sleep(3000);
+			extentTest.info("Before listener enabling",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			click(ListenersObject.startIcon, "startIcon");
+			sleep(2000);
+			click(ListenersObject.yesBTN, "yesBTN");
+			sleep(1500);
+			extentTest.pass("The confirmation is : "+listenerName,
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+
+			click(ListenersObject.alerListenerOK, "alerListenerOK");
+			sleep(4000);
+			searchListener(listenerName);
+			sleep(3000);
+			extentTest.pass("Post listener enabling successfully : "+listenerName,
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			backToFrame();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void stopListener(JsonNode node) {
+		try {
+			sleep(4000);
+			moveFrame("bodyframe");
+			String listenerName = node.get("name").asText();
+			searchListener(listenerName);
+			sleep(3000);
+			extentTest.info("Before listener stopping",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			click(ListenersObject.stopIcon, "stopIcon");
+			sleep(3000);
+			click(ListenersObject.yesBTN, "yesBTN");
+			sleep(1500);
+			extentTest.pass("The confirmation message is ",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			click(ListenersObject.alerListenerOK, "alerListenerOK");
+			sleep(4000);
+			searchListener(listenerName);
+			sleep(3000);
+			extentTest.pass("Post listener stopping successfully : "+listenerName,
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			backToFrame();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteListener(JsonNode node) {
+		try {
+			sleep(4000);
+			moveFrame("bodyframe");
+			String listenerName = node.get("name").asText();
+			searchListener(listenerName);
+			sleep(3000);
+			extentTest.info("The listener name is : "+listenerName);
+			extentTest.info("Before listener deleting",
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			click(ListenersObject.deleteIcon, "deleteIcon");
+			sleep(3000);
+			click(ListenersObject.yesBTN, "yesBTN");
+			sleep(4000);
+			searchListener(listenerName);
+			sleep(3000);
+			extentTest.pass("Post listener deleting successfully : "+listenerName,
+					MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			clear(ListenersObject.searchfiled, "searchfiled");
+			backToFrame();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

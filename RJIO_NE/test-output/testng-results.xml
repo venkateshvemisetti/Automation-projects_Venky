@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-03-04T18:26:38 IST" name="Default suite" finished-at="2025-03-04T18:26:41 IST" duration-ms="3693">
+    <groups>
+    </groups>
+    <test started-at="2025-03-04T18:26:38 IST" name="Default test" finished-at="2025-03-04T18:26:41 IST" duration-ms="3693">
+      <class name="com.intense.als.GetRegeneratedCAFStatus">
+        <test-method signature="getRegeneratedCAFStatusResult()[pri:0, instance:com.intense.als.GetRegeneratedCAFStatus@17497425]" started-at="2025-03-04T18:26:38 IST" name="getRegeneratedCAFStatusResult" finished-at="2025-03-04T18:26:41 IST" duration-ms="3600" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getRegeneratedCAFStatusResult -->
+      </class> <!-- com.intense.als.GetRegeneratedCAFStatus -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

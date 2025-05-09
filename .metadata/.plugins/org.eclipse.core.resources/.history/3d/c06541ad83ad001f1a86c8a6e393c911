@@ -1,0 +1,33 @@
+package com.rjio.pages;
+
+import org.openqa.selenium.WebDriver;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.rjio.accelator.ActionWrappers;
+import com.rjio.objects.LogoutObject;
+
+public class LogoutPage extends ActionWrappers {
+
+	public void logoutUser() {
+		try {
+			if (findElementts(LogoutObject.logoutBTN).size() > 0) {
+				if (findElementt(LogoutObject.logoutBTN).isEnabled()) {
+					sleep(1000);
+					click(LogoutObject.logoutBTN, "logoutBTN");
+					sleep(1500);
+					extentTest.info("Post logging-out the Application", MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+				} else {
+					System.err.println("logoutBTN is not enabled");
+				}
+			} else {
+				System.err.println("logoutBTN size is not matched");
+				extentTest.error("logoutBTN size is not matched", MediaEntityBuilder.createScreenCaptureFromPath(takeScreenShot()).build());
+			}
+			
+
+		} catch (Exception e) {
+         e.printStackTrace();
+		}
+	}
+
+}

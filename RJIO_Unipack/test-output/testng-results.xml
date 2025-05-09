@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="9" passed="9" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2023-08-04T19:52:53 IST" name="Suite" finished-at="2023-08-04T19:53:49 IST" duration-ms="56618">
+    <groups>
+    </groups>
+    <test started-at="2023-08-04T19:52:53 IST" name="Test" finished-at="2023-08-04T19:53:49 IST" duration-ms="56618">
+      <class name="com.intense.testcases.SearchUserTestcase">
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.intense.testcases.SearchUserTestcase@6fa51cd4]" started-at="2023-08-04T19:53:30 IST" name="extentTest" finished-at="2023-08-04T19:53:30 IST" duration-ms="0" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.intense.testcases.SearchUserTestcase.serachUser()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="serachUser()[pri:0, instance:com.intense.testcases.SearchUserTestcase@6fa51cd4]" started-at="2023-08-04T19:53:30 IST" name="serachUser" finished-at="2023-08-04T19:53:36 IST" duration-ms="6027" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- serachUser -->
+      </class> <!-- com.intense.testcases.SearchUserTestcase -->
+      <class name="com.intense.testcases.LoginTestcase">
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.intense.testcases.LoginTestcase@1a75e76a]" started-at="2023-08-04T19:53:03 IST" name="extentTest" finished-at="2023-08-04T19:53:03 IST" duration-ms="2" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.intense.testcases.LoginTestcase.loginApp()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="loginApp()[pri:0, instance:com.intense.testcases.LoginTestcase@1a75e76a]" started-at="2023-08-04T19:53:03 IST" name="loginApp" finished-at="2023-08-04T19:53:20 IST" duration-ms="17081" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loginApp -->
+      </class> <!-- com.intense.testcases.LoginTestcase -->
+      <class name="com.intense.testcases.UsersTestcase">
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.intense.testcases.UsersTestcase@353352b6]" started-at="2023-08-04T19:53:25 IST" name="extentTest" finished-at="2023-08-04T19:53:25 IST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.intense.testcases.UsersTestcase.users()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="users()[pri:0, instance:com.intense.testcases.UsersTestcase@353352b6]" started-at="2023-08-04T19:53:25 IST" name="users" finished-at="2023-08-04T19:53:30 IST" duration-ms="4933" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- users -->
+      </class> <!-- com.intense.testcases.UsersTestcase -->
+      <class name="com.intense.testcases.OpenBrowserTestcase">
+        <test-method is-config="true" signature="extentReportStart()[pri:0, instance:com.intense.testcases.OpenBrowserTestcase@5e2c3d18]" started-at="2023-08-04T19:52:52 IST" name="extentReportStart" finished-at="2023-08-04T19:52:53 IST" duration-ms="540" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentReportStart -->
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.intense.testcases.OpenBrowserTestcase@5e2c3d18]" started-at="2023-08-04T19:52:53 IST" name="extentTest" finished-at="2023-08-04T19:52:53 IST" duration-ms="18" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.intense.testcases.OpenBrowserTestcase.openApplication()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="openApplication()[pri:0, instance:com.intense.testcases.OpenBrowserTestcase@5e2c3d18]" started-at="2023-08-04T19:52:53 IST" name="openApplication" finished-at="2023-08-04T19:53:03 IST" duration-ms="10215" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openApplication -->
+        <test-method is-config="true" signature="extentReportEnd()[pri:0, instance:com.intense.testcases.OpenBrowserTestcase@5e2c3d18]" started-at="2023-08-04T19:53:49 IST" name="extentReportEnd" finished-at="2023-08-04T19:53:51 IST" duration-ms="1164" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentReportEnd -->
+      </class> <!-- com.intense.testcases.OpenBrowserTestcase -->
+      <class name="com.intense.testcases.CreateUserTestcase">
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.intense.testcases.CreateUserTestcase@57a78e3]" started-at="2023-08-04T19:53:30 IST" name="extentTest" finished-at="2023-08-04T19:53:30 IST" duration-ms="7" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.intense.testcases.CreateUserTestcase.frameMove()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="frameMove()[pri:0, instance:com.intense.testcases.CreateUserTestcase@57a78e3]" started-at="2023-08-04T19:53:30 IST" name="frameMove" finished-at="2023-08-04T19:53:30 IST" duration-ms="107" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- frameMove -->
+      </class> <!-- com.intense.testcases.CreateUserTestcase -->
+      <class name="com.intense.testcases.UserManagerTestcase">
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.intense.testcases.UserManagerTestcase@5032714f]" started-at="2023-08-04T19:53:20 IST" name="extentTest" finished-at="2023-08-04T19:53:20 IST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.intense.testcases.UserManagerTestcase.userManger()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="userManger()[pri:0, instance:com.intense.testcases.UserManagerTestcase@5032714f]" started-at="2023-08-04T19:53:20 IST" name="userManger" finished-at="2023-08-04T19:53:25 IST" duration-ms="5217" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- userManger -->
+      </class> <!-- com.intense.testcases.UserManagerTestcase -->
+      <class name="com.intense.testcases.EditUserTestcase">
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.intense.testcases.EditUserTestcase@710c2b53]" started-at="2023-08-04T19:53:36 IST" name="extentTest" finished-at="2023-08-04T19:53:36 IST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.intense.testcases.EditUserTestcase.editIcon()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="editIcon()[pri:0, instance:com.intense.testcases.EditUserTestcase@710c2b53]" started-at="2023-08-04T19:53:36 IST" name="editIcon" finished-at="2023-08-04T19:53:38 IST" duration-ms="1856" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- editIcon -->
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.intense.testcases.EditUserTestcase@710c2b53]" started-at="2023-08-04T19:53:38 IST" name="extentTest" finished-at="2023-08-04T19:53:38 IST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.intense.testcases.EditUserTestcase.editUserData()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="editUserData()[pri:0, instance:com.intense.testcases.EditUserTestcase@710c2b53]" started-at="2023-08-04T19:53:38 IST" name="editUserData" finished-at="2023-08-04T19:53:39 IST" duration-ms="549" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- editUserData -->
+      </class> <!-- com.intense.testcases.EditUserTestcase -->
+      <class name="com.intense.testcases.LogoutTestcase">
+        <test-method is-config="true" signature="extentTest(java.lang.reflect.Method)[pri:0, instance:com.intense.testcases.LogoutTestcase@14028087]" started-at="2023-08-04T19:53:39 IST" name="extentTest" finished-at="2023-08-04T19:53:39 IST" duration-ms="1" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.intense.testcases.LogoutTestcase.logoutApp()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- extentTest -->
+        <test-method signature="logoutApp()[pri:0, instance:com.intense.testcases.LogoutTestcase@14028087]" started-at="2023-08-04T19:53:39 IST" name="logoutApp" finished-at="2023-08-04T19:53:49 IST" duration-ms="10419" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logoutApp -->
+      </class> <!-- com.intense.testcases.LogoutTestcase -->
+    </test> <!-- Test -->
+  </suite> <!-- Suite -->
+</testng-results>
